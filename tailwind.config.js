@@ -10,7 +10,6 @@ module.exports = {
         main: colors.yellow,
         manger: colors.emerald,
         boire: colors.pink,
-        cta: colors.blue,
       },
       typography: (theme) => ({
         DEFAULT: {

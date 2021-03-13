@@ -14,7 +14,7 @@ export default function Header() {
         <NextLink href="/">
           <div className="w-8 h-8 text-base font-medium outline-none cursor-pointer md:w-10 md:h-10 text-main-500 group hover:text-main-100">
             <CookBook />
-            <span className="sr-only">SiteName</span>
+            <span className="sr-only">Cuisinomicon</span>
           </div>
         </NextLink>
 
