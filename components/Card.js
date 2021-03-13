@@ -16,7 +16,7 @@ const Card = (props) => {
 
   return (
     <NextLink href={props.slug}>
-      <div className="grid items-center grid-flow-row gap-2 px-4 py-8 text-black cursor-pointer ring-gray-800 ring-8 rounded-xl bg-yellow-50 bg-opacity-90">
+      <div className="grid items-center grid-flow-row gap-2 px-4 py-8 text-black cursor-pointer bg-gradient-to-bl from-yellow-100 via-yellow-50 to-yellow-100 ring-gray-800 ring-8 rounded-xl opacity-90 hover:opacity-100">
         <div className="text-center">
           <span className="font-black text-wl">- {roman} -</span>
           <h1 className="text-xl font-bold">{props.title}</h1>

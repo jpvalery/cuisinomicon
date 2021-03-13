@@ -17,7 +17,7 @@ const Hero = (props) => {
   return (
     <div className="mb-6">
       <NextLink href={props.slug}>
-        <div className="relative cursor-pointer max-w-max">
+        <div className="relative cursor-pointer max-w-max opacity-90 hover:opacity-100">
           <div className="relative flex">
             <Image
               src={props.coverImage}
