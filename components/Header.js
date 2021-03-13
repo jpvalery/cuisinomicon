@@ -10,7 +10,7 @@ export default function Header() {
     <div className="sticky top-0 z-50 max-w-4xl pt-4 mx-auto bg-gradient-to-b from-eigengrau-600">
       <div className="flex items-center justify-between p-4 text-base font-medium border-b-2 border-gray-800">
         <NextLink href="/">
-          <div className="w-8 h-8 outline-none cursor-pointer md:w-10 md:h-10 text-brand-500 hover:text-brand-100">
+          <div className="w-8 h-8 outline-none cursor-pointer md:w-10 md:h-10 text-brand-600 hover:text-red-100">
             <span className="sr-only">Cuisinomicon</span>
             <CookBook />
           </div>

@@ -33,14 +33,14 @@ const Hero = (props) => {
             <div className="z-50 grid items-center h-full p-6 rounded-lg from-overlayg1-600 to-overlayg2-600 bg-gradient-to-l bg-clip-border">
               <div className="grid w-5/12 grid-flow-row gap-6 mt-auto ml-auto">
                 <div className="text-center">
-                  <span className="text-sm font-black sm:text-lg">
+                  <span className="text-sm font-black xs:text-lg">
                     — {roman} –{" "}
                   </span>
-                  <h1 className="text-lg font-bold sm:text-2xl">
+                  <h1 className="text-lg font-bold xs:text-2xl">
                     {props.title}
                   </h1>
                 </div>
-                <div className="items-center justify-center hidden grid-flow-col gap-2 pb-4 mx-auto text-base border-b-2 border-white border-opacity-60 sm:grid max-w-max">
+                <div className="items-center justify-center hidden grid-flow-col gap-2 pb-4 mx-auto text-base border-b-2 border-white border-opacity-60 xs:grid max-w-max">
                   <p>{friendlyDate}</p>
                   <p>⏾</p>
                   <p>{props.author}</p>

@@ -25,8 +25,8 @@ const Card = (props) => {
           <Image
             src={props.coverImage}
             alt={props.title}
-            width={360}
-            height={240}
+            width={420}
+            height={280}
             layout="intrinsic"
             className="rounded-t-lg"
           />

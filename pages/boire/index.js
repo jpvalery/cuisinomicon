@@ -22,7 +22,7 @@ export default function Index({ allPosts }) {
         excerpt={heroPost.excerpt}
       />
 
-      <div className="grid grid-cols-1 gap-6 mb-32 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-6 mb-32 xs:grid-cols-2">
         {morePosts.map((post) => (
           <Card
             key={post.slug}
