@@ -3,7 +3,7 @@ import Twitter from "../elements/icons/Twitter";
 export default function Footer() {
   return (
     <footer>
-      <div className="max-w-3xl py-12 mx-auto md:flex md:items-center md:justify-between">
+      <div className="max-w-4xl py-12 mx-auto md:flex md:items-center md:justify-between">
         <div className="flex justify-center space-x-6 md:order-2">
           <a
             href="https://twitter.com/jpvalery"

@@ -7,7 +7,7 @@ import Lemonade from "../elements/iconset/Lemonade";
 
 export default function Header() {
   return (
-    <div className="sticky top-0 z-50 max-w-3xl pt-4 mx-auto bg-gradient-to-b from-eigengrau-600">
+    <div className="sticky top-0 z-50 max-w-4xl pt-4 mx-auto bg-gradient-to-b from-eigengrau-600">
       <div className="flex items-center justify-between p-4 text-base font-medium border-b-2 border-gray-800">
         <NextLink href="/">
           <div className="w-8 h-8 outline-none cursor-pointer md:w-10 md:h-10 text-brand-500 hover:text-brand-100">
@@ -24,7 +24,7 @@ export default function Header() {
             </div>
           </NextLink>
 
-          <NextLink href="/manger">
+          <NextLink href="/boire">
             <div className="w-8 h-8 outline-none cursor-pointer md:w-10 md:h-10 text-boire-500 hover:text-boire-100">
               <span className="sr-only">Boire</span>
               <Lemonade />

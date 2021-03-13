@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
       <DefaultSeo {...SEO} />
       <div className="max-w-6xl px-6 pb-6 mx-auto">
         <Header />
-        <div className="max-w-3xl py-12 mx-auto">
+        <div className="max-w-4xl py-12 mx-auto">
           <Component {...pageProps} />
         </div>
         <Footer />

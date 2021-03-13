@@ -7,6 +7,8 @@ module.exports = {
     extend: {
       colors: {
         eigengrau: { 600: "#16161D" },
+        overlayg1: { 600: "#00000098" },
+        overlayg2: { 600: "#FFFFFF24" },
         brand: colors.yellow,
         manger: colors.emerald,
         boire: colors.pink,
