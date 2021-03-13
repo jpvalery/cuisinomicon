@@ -1,10 +1,9 @@
 import React from "react";
 
-function Corkscrew() {
+export default function Corkscrew() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 31.961"
       version="1.1"
       viewBox="0 0 32 31.961"
       fill="currentColor"
@@ -17,5 +16,3 @@ function Corkscrew() {
     </svg>
   );
 }
-
-export default Corkscrew;

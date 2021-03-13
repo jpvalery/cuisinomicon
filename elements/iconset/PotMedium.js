@@ -1,10 +1,9 @@
 import React from "react";
 
-function PotMedium() {
+export default function PotMedium() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 27"
       version="1.1"
       viewBox="0 0 32 27"
       fill="currentColor"
@@ -23,5 +22,3 @@ function PotMedium() {
     </svg>
   );
 }
-
-export default PotMedium;

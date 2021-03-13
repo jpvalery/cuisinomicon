@@ -1,10 +1,9 @@
 import React from "react";
 
-function CupCappuccino() {
+export default function CupCappuccino() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 33.95"
       version="1.1"
       viewBox="0 0 32 33.95"
       fill="currentColor"
@@ -23,5 +22,3 @@ function CupCappuccino() {
     </svg>
   );
 }
-
-export default CupCappuccino;

@@ -1,11 +1,9 @@
 import React from "react";
 
-function Chemistry() {
+export default function Chemistry() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      id="food_x5F_ingredients"
-      enableBackground="0 0 32 32"
       version="1.1"
       viewBox="0 0 32 32"
       fill="currentColor"
@@ -18,5 +16,3 @@ function Chemistry() {
     </svg>
   );
 }
-
-export default Chemistry;

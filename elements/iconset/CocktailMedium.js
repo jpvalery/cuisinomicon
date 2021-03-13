@@ -1,10 +1,9 @@
 import React from "react";
 
-function CocktailMedium() {
+export default function CocktailMedium() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 23 29"
       version="1.1"
       viewBox="0 0 23 29"
       fill="currentColor"
@@ -20,5 +19,3 @@ function CocktailMedium() {
     </svg>
   );
 }
-
-export default CocktailMedium;

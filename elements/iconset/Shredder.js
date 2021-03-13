@@ -1,10 +1,9 @@
 import React from "react";
 
-function Shredder() {
+export default function Shredder() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 30 32"
       version="1.1"
       viewBox="0 0 30 32"
       fill="currentColor"
@@ -31,5 +30,3 @@ function Shredder() {
     </svg>
   );
 }
-
-export default Shredder;

@@ -1,10 +1,9 @@
 import React from "react";
 
-function CupTea() {
+export default function CupTea() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 28 30.95"
       version="1.1"
       viewBox="0 0 28 30.95"
       fill="currentColor"
@@ -18,5 +17,3 @@ function CupTea() {
     </svg>
   );
 }
-
-export default CupTea;

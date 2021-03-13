@@ -1,10 +1,9 @@
 import React from "react";
 
-function Frying() {
+export default function Frying() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 31 32.988"
       version="1.1"
       viewBox="0 0 31 32.988"
       fill="currentColor"
@@ -20,5 +19,3 @@ function Frying() {
     </svg>
   );
 }
-
-export default Frying;

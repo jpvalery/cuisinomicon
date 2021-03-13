@@ -1,10 +1,9 @@
 import React from "react";
 
-function DressingSqueeze() {
+export default function DressingSqueeze() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 16 32"
       version="1.1"
       viewBox="0 0 16 32"
       fill="currentColor"
@@ -18,5 +17,3 @@ function DressingSqueeze() {
     </svg>
   );
 }
-
-export default DressingSqueeze;

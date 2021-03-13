@@ -1,10 +1,9 @@
 import React from "react";
 
-function Blender() {
+export default function Blender() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 25 32"
       version="1.1"
       viewBox="0 0 25 32"
       fill="currentColor"
@@ -16,5 +15,3 @@ function Blender() {
     </svg>
   );
 }
-
-export default Blender;

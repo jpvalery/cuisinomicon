@@ -1,10 +1,9 @@
 import React from "react";
 
-function Kettle() {
+export default function Kettle() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 32"
       version="1.1"
       viewBox="0 0 32 32"
       fill="currentColor"
@@ -24,5 +23,3 @@ function Kettle() {
     </svg>
   );
 }
-
-export default Kettle;

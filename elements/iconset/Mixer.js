@@ -1,6 +1,6 @@
 import React from "react";
 
-function Mixer() {
+export default function Mixer() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,5 +19,3 @@ function Mixer() {
     </svg>
   );
 }
-
-export default Mixer;

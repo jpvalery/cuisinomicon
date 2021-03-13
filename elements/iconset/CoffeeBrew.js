@@ -1,10 +1,9 @@
 import React from "react";
 
-function CoffeeBrew() {
+export default function CoffeeBrew() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 33 29.719"
       version="1.1"
       viewBox="0 0 33 29.719"
       fill="currentColor"
@@ -16,5 +15,3 @@ function CoffeeBrew() {
     </svg>
   );
 }
-
-export default CoffeeBrew;

@@ -1,10 +1,9 @@
 import React from "react";
 
-function Knife() {
+export default function Knife() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 30.065 32"
       version="1.1"
       viewBox="0 0 30.065 32"
       fill="currentColor"
@@ -14,5 +13,3 @@ function Knife() {
     </svg>
   );
 }
-
-export default Knife;

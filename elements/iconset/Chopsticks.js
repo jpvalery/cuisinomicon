@@ -1,10 +1,9 @@
 import React from "react";
 
-function Chopsticks() {
+export default function Chopsticks() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32.126 32.125"
       version="1.1"
       viewBox="0 0 32.126 32.125"
       fill="currentColor"
@@ -15,5 +14,3 @@ function Chopsticks() {
     </svg>
   );
 }
-
-export default Chopsticks;

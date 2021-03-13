@@ -1,10 +1,9 @@
 import React from "react";
 
-function Bowl() {
+export default function Bowl() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 24 32"
       version="1.1"
       viewBox="0 0 24 32"
       fill="currentColor"
@@ -17,5 +16,3 @@ function Bowl() {
     </svg>
   );
 }
-
-export default Bowl;

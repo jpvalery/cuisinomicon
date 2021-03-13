@@ -1,10 +1,9 @@
 import React from "react";
 
-function FrenchFries() {
+export default function FrenchFries() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 32"
       version="1.1"
       viewBox="0 0 32 32"
       fill="currentColor"
@@ -20,5 +19,3 @@ function FrenchFries() {
     </svg>
   );
 }
-
-export default FrenchFries;

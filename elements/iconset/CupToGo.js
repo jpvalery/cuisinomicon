@@ -1,10 +1,9 @@
 import React from "react";
 
-function CupToGo() {
+export default function CupToGo() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 24 32"
       version="1.1"
       viewBox="0 0 24 32"
       fill="currentColor"
@@ -30,5 +29,3 @@ function CupToGo() {
     </svg>
   );
 }
-
-export default CupToGo;

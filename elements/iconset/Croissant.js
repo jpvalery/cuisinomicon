@@ -1,10 +1,9 @@
 import React from "react";
 
-function Croissant() {
+export default function Croissant() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 33.001 22.501"
       version="1.1"
       viewBox="0 0 33.001 22.501"
       fill="currentColor"
@@ -24,5 +23,3 @@ function Croissant() {
     </svg>
   );
 }
-
-export default Croissant;

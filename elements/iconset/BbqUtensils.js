@@ -1,10 +1,9 @@
 import React from "react";
 
-function BbqUtensils() {
+export default function BbqUtensils() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 37.707 33.707"
       version="1.1"
       viewBox="0 0 37.707 33.707"
       fill="currentColor"
@@ -38,5 +37,3 @@ function BbqUtensils() {
     </svg>
   );
 }
-
-export default BbqUtensils;

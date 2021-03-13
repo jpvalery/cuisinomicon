@@ -1,10 +1,9 @@
 import React from "react";
 
-function Balance() {
+export default function Balance() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 28 32"
       version="1.1"
       viewBox="0 0 28 32"
       fill="currentColor"
@@ -19,5 +18,3 @@ function Balance() {
     </svg>
   );
 }
-
-export default Balance;

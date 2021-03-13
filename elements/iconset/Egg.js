@@ -1,10 +1,9 @@
 import React from "react";
 
-function Egg() {
+export default function Egg() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 31.888 32.141"
       version="1.1"
       viewBox="0 0 31.888 32.141"
       fill="currentColor"
@@ -17,5 +16,3 @@ function Egg() {
     </svg>
   );
 }
-
-export default Egg;

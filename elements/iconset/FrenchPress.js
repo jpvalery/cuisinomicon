@@ -1,10 +1,9 @@
 import React from "react";
 
-function FrenchPress() {
+export default function FrenchPress() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 22.414 32"
       version="1.1"
       viewBox="0 0 22.414 32"
       fill="currentColor"
@@ -24,5 +23,3 @@ function FrenchPress() {
     </svg>
   );
 }
-
-export default FrenchPress;

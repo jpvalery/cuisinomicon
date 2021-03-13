@@ -1,10 +1,9 @@
 import React from "react";
 
-function Utensils() {
+export default function Utensils() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 19 32"
       version="1.1"
       viewBox="0 0 19 32"
       fill="currentColor"
@@ -18,5 +17,3 @@ function Utensils() {
     </svg>
   );
 }
-
-export default Utensils;

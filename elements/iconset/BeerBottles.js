@@ -1,13 +1,11 @@
 import React from "react";
 
-function BeerBottles() {
+export default function BeerBottles() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 26 32"
       version="1.1"
       viewBox="0 0 26 32"
-      fill="currentColor"
       fill="currentColor"
     >
       <style></style>
@@ -17,5 +15,3 @@ function BeerBottles() {
     </svg>
   );
 }
-
-export default BeerBottles;

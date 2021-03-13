@@ -1,10 +1,9 @@
 import React from "react";
 
-function Bread() {
+export default function Bread() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 24"
       version="1.1"
       viewBox="0 0 32 24"
       fill="currentColor"
@@ -19,5 +18,3 @@ function Bread() {
     </svg>
   );
 }
-
-export default Bread;

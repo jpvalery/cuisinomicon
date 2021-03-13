@@ -1,10 +1,9 @@
 import React from "react";
 
-function CakeSlice() {
+export default function CakeSlice() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 31.898"
       version="1.1"
       viewBox="0 0 32 31.898"
       fill="currentColor"
@@ -21,5 +20,3 @@ function CakeSlice() {
     </svg>
   );
 }
-
-export default CakeSlice;

@@ -1,10 +1,9 @@
 import React from "react";
 
-function Beef() {
+export default function Beef() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 26 32.006"
       version="1.1"
       viewBox="0 0 26 32.006"
       fill="currentColor"
@@ -29,5 +28,3 @@ function Beef() {
     </svg>
   );
 }
-
-export default Beef;

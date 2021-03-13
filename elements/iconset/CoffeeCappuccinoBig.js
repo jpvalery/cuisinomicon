@@ -1,10 +1,9 @@
 import React from "react";
 
-function CoffeeCappuccinoBig() {
+export default function CoffeeCappuccinoBig() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 31.707"
       version="1.1"
       viewBox="0 0 32 31.707"
       fill="currentColor"
@@ -19,5 +18,3 @@ function CoffeeCappuccinoBig() {
     </svg>
   );
 }
-
-export default CoffeeCappuccinoBig;

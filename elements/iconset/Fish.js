@@ -1,10 +1,9 @@
 import React from "react";
 
-function Fish() {
+export default function Fish() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 31.851 31.851"
       version="1.1"
       viewBox="0 0 31.851 31.851"
       fill="currentColor"
@@ -29,5 +28,3 @@ function Fish() {
     </svg>
   );
 }
-
-export default Fish;

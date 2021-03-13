@@ -1,10 +1,9 @@
 import React from "react";
 
-function CoffeeSip() {
+export default function CoffeeSip() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 22 32"
       version="1.1"
       viewBox="0 0 22 32"
       fill="currentColor"
@@ -21,5 +20,3 @@ function CoffeeSip() {
     </svg>
   );
 }
-
-export default CoffeeSip;

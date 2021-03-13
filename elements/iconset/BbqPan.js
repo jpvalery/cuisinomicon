@@ -1,10 +1,9 @@
 import React from "react";
 
-function BbqPan() {
+export default function BbqPan() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 32 32"
       version="1.1"
       viewBox="0 0 32 32"
       fill="currentColor"
@@ -27,5 +26,3 @@ function BbqPan() {
     </svg>
   );
 }
-
-export default BbqPan;

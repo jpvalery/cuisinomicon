@@ -1,10 +1,9 @@
 import React from "react";
 
-function Fork() {
+export default function Fork() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      enableBackground="0 0 16 32.081"
       version="1.1"
       viewBox="0 0 16 32.081"
       fill="currentColor"
@@ -15,5 +14,3 @@ function Fork() {
     </svg>
   );
 }
-
-export default Fork;
