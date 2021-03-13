@@ -7,7 +7,7 @@ module.exports = {
     extend: {
       colors: {
         eigengrau: { 600: "#16161D" },
-        main: colors.yellow,
+        brand: colors.yellow,
         manger: colors.emerald,
         boire: colors.pink,
       },
