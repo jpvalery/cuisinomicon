@@ -12,7 +12,7 @@ export default function Index({ allPosts }) {
   return (
     <div className="grid grid-flow-row gap-10">
       <h1 className="text-4xl font-bold text-boire-500">Dernière recette</h1>
-      
+
       <Hero
         key={heroPost.slug}
         title={heroPost.title}
@@ -24,7 +24,9 @@ export default function Index({ allPosts }) {
         excerpt={heroPost.excerpt}
       />
 
-      <h1 className="text-4xl font-bold text-boire-500">Toutes les recettes de cocktails</h1>
+      <h1 className="text-4xl font-bold text-boire-500">
+        Toutes les recettes de cocktails
+      </h1>
 
       <div className="grid grid-cols-1 gap-6 mb-32 xs:grid-cols-2">
         {morePosts.map((post) => (

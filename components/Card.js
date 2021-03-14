@@ -31,9 +31,7 @@ const Card = (props) => {
             className="rounded-t-lg"
           />
         </div>
-        <div
-          className="grid items-center justify-center grid-flow-col gap-2 pb-2 mx-auto text-base border-b-2 border-black border-opacity-60 max-w-max"
-        >
+        <div className="grid items-center justify-center grid-flow-col gap-2 pb-2 mx-auto text-base border-b-2 border-black border-opacity-60 max-w-max">
           <p>{friendlyDate}</p>
           <p>⏾</p>
           <p>{props.author}</p>

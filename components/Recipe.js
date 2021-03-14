@@ -46,7 +46,9 @@ const Recipe = (props) => {
   return (
     <>
       <div>
-        <div className={`text-3xl font-bold text-center ${textColor}`}>— {roman} —</div>
+        <div className={`text-3xl font-bold text-center ${textColor}`}>
+          — {roman} —
+        </div>
 
         <h1 className="text-5xl font-bold text-center">{props.title}</h1>
         <div className="m-4">

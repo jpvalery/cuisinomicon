@@ -1,17 +1,80 @@
+import { getAllPosts as getAllPostsB } from "../lib/apiB";
+import { getAllPosts as getAllPostsM } from "../lib/apiM";
+
+import Hero from "../components/Hero";
+import ButtonsCategory from "../components/ButtonsCategory";
 import Logo from "../elements/icons/Cuisinomicon";
 
-export default function Home() {
+export default function Home({ allPosts }) {
   return (
-    <div>
-      <main>
-        <div className="max-w-2xl p-12 mx-auto animate-pulse-slow text-brand-600">
+    <main>
+      <section>
+        <div className="max-w-2xl pb-6 mx-auto animate-pulse-slow text-brand-600">
           <Logo />
           <h1 className="sr-only">Cuisinomicon</h1>
         </div>
         <p className="text-4xl font-bold text-center">
           Recettes de cuisine cabalistiques
         </p>
-      </main>
-    </div>
+      </section>
+
+      <ButtonsCategory />
+
+      <Hero
+        key={allPosts.latestB.slug}
+        title={allPosts.latestB.title}
+        coverImage={allPosts.latestB.coverImage}
+        date={allPosts.latestB.date}
+        author={allPosts.latestB.author.name}
+        id={allPosts.latestB.id}
+        slug={`/boire/${allPosts.latestB.slug}`}
+        excerpt={allPosts.latestB.excerpt}
+      />
+
+      <Hero
+        key={allPosts.latestM.slug}
+        title={allPosts.latestM.title}
+        coverImage={allPosts.latestM.coverImage}
+        date={allPosts.latestM.date}
+        author={allPosts.latestB.author.name}
+        id={allPosts.latestM.id}
+        slug={`/manger/${allPosts.latestM.slug}`}
+        excerpt={allPosts.latestM.excerpt}
+      />
+    </main>
   );
+}
+
+export async function getStaticProps() {
+  const allPostsB = getAllPostsB([
+    "title",
+    "date",
+    "slug",
+    "id",
+    "author",
+    "coverImage",
+    "excerpt",
+  ]);
+
+  const latestB = allPostsB[0];
+
+  const allPostsM = getAllPostsM([
+    "title",
+    "date",
+    "slug",
+    "id",
+    "author",
+    "coverImage",
+    "excerpt",
+  ]);
+
+  const latestM = allPostsM[0];
+
+  const allPosts = { latestB, latestM };
+
+  console.log(allPosts);
+
+  return {
+    props: { allPosts },
+  };
 }
