@@ -61,7 +61,7 @@ const Recipe = (props) => {
         <div
           className={`grid items-center justify-center grid-flow-col gap-8 pb-4 text-lg border-b-2 ${borderColor} border-opacity-60`}
         >
-          <p className="text-right md:w-20">{friendlyDate}</p>
+          <p className="w-32 text-right">{friendlyDate}</p>
           <div className={`w-6 h-6 ${textColor} -ml-1`}>
             {(() => {
               if (props.category == "manger") return <CuttingBoard />;
@@ -69,7 +69,7 @@ const Recipe = (props) => {
               else return <CookBook />;
             })()}
           </div>
-          <p className="text-left md:w-20">{props.author.name}</p>
+          <p className="w-32 text-left">{props.author.name}</p>
         </div>
       </div>
       <article className={`py-12 prose prose-xl ${proseColor}`}>
