@@ -39,8 +39,8 @@ const Recipe = (props) => {
     borderColor = "border-boire-500";
   } else {
     proseColor = "prose-brand";
-    textColor = "text-brand-500";
-    borderColor = "border-brand-500";
+    textColor = "text-brand-600";
+    borderColor = "border-brand-600";
   }
 
   return (
