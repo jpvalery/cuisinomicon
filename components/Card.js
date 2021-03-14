@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import romanNumeral from "../lib/romanNumeral";
 
-import CardBorder from "../elements/CardBorder"
+import CardBorder from "../elements/CardBorder";
 
 const Card = (props) => {
   const publish = new Date(props.date);
@@ -45,7 +45,6 @@ const Card = (props) => {
         </article>
 
         <CardBorder category={props.category} />
-
       </div>
     </NextLink>
   );

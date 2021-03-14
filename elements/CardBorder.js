@@ -1,5 +1,5 @@
 import Bakery from "../elements/iconset/Bakery";
-import Chopsticks from "../elements/iconset/Chopsticks"
+import Chopsticks from "../elements/iconset/Chopsticks";
 import Cover from "../elements/iconset/Cover";
 import Knife from "../elements/iconset/Knife";
 
@@ -13,39 +13,62 @@ import Hatchet from "../elements/iconset/Hatchet";
 import Takeout from "../elements/iconset/Takeout";
 
 const CardBorder = (props) => {
-    let borderColor;
-    let cornerColor;
-    let cornerColorOpposite;
+  let borderColor;
+  let cornerColor;
+  let cornerColorOpposite;
 
-    let cornerIconTopLeft;
-    let cornerIconTopRight;
-    let cornerIconBottomLeft;
-    let cornerIconBottomRight;
+  let cornerIconTopLeft;
+  let cornerIconTopRight;
+  let cornerIconBottomLeft;
+  let cornerIconBottomRight;
 
   if (props.category == "manger") {
     borderColor = "border-gradient-manger";
-    cornerColor= "corner-tlbr-manger";
+    cornerColor = "corner-tlbr-manger";
     cornerColorOpposite = "corner-trbl-manger";
-    cornerIconTopLeft = <Bakery />
-    cornerIconTopRight = <Chopsticks />
-    cornerIconBottomLeft = <div className="transform rotate-45"><Cover /></div>
-    cornerIconBottomRight = <Knife />
-
+    cornerIconTopLeft = <Bakery />;
+    cornerIconTopRight = <Chopsticks />;
+    cornerIconBottomLeft = (
+      <div className="transform rotate-45">
+        <Cover />
+      </div>
+    );
+    cornerIconBottomRight = <Knife />;
   } else if (props.category == "boire") {
     borderColor = "border-gradient-boire";
     cornerColor = "corner-tlbr-boire";
     cornerColorOpposite = "corner-trbl-boire";
-    cornerIconTopLeft = <div className="transform rotate-45"><Cocktail /></div>;
-    cornerIconTopRight = <div className="transform rotate-45"><CocktailLong /></div>;
-    cornerIconBottomLeft = <div className="transform rotate-45"><Chemistry /></div>;
-    cornerIconBottomRight = <div className="transform rotate-45"><Champagne /></div>;
+    cornerIconTopLeft = (
+      <div className="transform rotate-45">
+        <Cocktail />
+      </div>
+    );
+    cornerIconTopRight = (
+      <div className="transform rotate-45">
+        <CocktailLong />
+      </div>
+    );
+    cornerIconBottomLeft = (
+      <div className="transform rotate-45">
+        <Chemistry />
+      </div>
+    );
+    cornerIconBottomRight = (
+      <div className="transform rotate-45">
+        <Champagne />
+      </div>
+    );
   } else {
     borderColor = "border-gradient-brand";
     cornerColor = "corner-tlbr-brand";
     cornerColorOpposite = "corner-trbl-brand";
     cornerIconTopLeft = <Hatchet />;
     cornerIconTopRight = <Chopsticks />;
-    cornerIconBottomLeft = <div className="transform rotate-45"><Takeout /></div>;
+    cornerIconBottomLeft = (
+      <div className="transform rotate-45">
+        <Takeout />
+      </div>
+    );
     cornerIconBottomRight = <Fish />;
   }
 
