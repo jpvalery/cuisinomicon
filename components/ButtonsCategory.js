@@ -7,7 +7,7 @@ import Lemonade from "../elements/iconset/Lemonade";
 
 export default function ButtonsCategory() {
   return (
-    <section className="grid items-center justify-center grid-flow-col gap-8 py-20">
+    <section className="grid items-center justify-center grid-flow-row gap-8 py-20 md:grid-flow-col">
       <NextLink href="/manger">
         <div class=" text-xl inline-flex items-center px-6 py-3 border border-transparent shadow-sm font-medium rounded-md text-white bg-manger-600 hover:bg-manger-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-manger-200 cursor-pointer">
           <div className="w-6 h-6 mr-6">
@@ -16,7 +16,7 @@ export default function ButtonsCategory() {
           Recettes à manger
         </div>
       </NextLink>
-      <div className="w-8 h-8 -ml-1 text-brand-600">
+      <div className="hidden w-8 h-8 -ml-1 text-brand-600 md:inline">
         <CookBook />
       </div>
       <NextLink href="/boire">
