@@ -13,9 +13,9 @@ export default function Footer() {
             <Twitter />
           </a>
         </div>
-        <div className="mt-8 md:mt-0 md:order-1">
-          <p className="text-base text-center text-gray-500">
-            &copy; 1992-2021{" "}
+        <div className="mt-4 md:mt-0 md:order-1">
+          <p className="text-sm text-center text-gray-500 md:text-base">
+            &copy; 2021 Cuisinomicon by{" "}
             <a
               href="https://jpvalery.me"
               className="hover:text-gray-400"
