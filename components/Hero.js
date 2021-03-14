@@ -15,7 +15,7 @@ const Hero = (props) => {
   const roman = romanNumeral(props.id);
 
   return (
-    <div className="mb-6">
+    <section className="mb-6">
       <NextLink href={props.slug}>
         <div className="relative cursor-pointer max-w-max opacity-90 hover:opacity-100">
           <div className="relative flex">
@@ -53,7 +53,7 @@ const Hero = (props) => {
           </div>
         </div>
       </NextLink>
-    </div>
+    </section>
   );
 };
 

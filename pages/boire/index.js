@@ -5,6 +5,7 @@ import { getAllPosts } from "../../lib/apiB";
 
 import Card from "../../components/Card";
 import Hero from "../../components/Hero";
+import SectionTitle from "../../components/SectionTitle";
 
 export default function Index({ allPosts }) {
   const heroPost = allPosts[0];
@@ -16,8 +17,8 @@ export default function Index({ allPosts }) {
         title="Recettes à boire"
         description="Parcourir les recettes de boissons du Cuisinomicon"
       />
-      <div className="grid grid-flow-row gap-10">
-        <h1 className="text-4xl font-bold text-boire-500">Dernière recette</h1>
+      <section className="grid grid-flow-row gap-8">
+        <SectionTitle title="Dernière recette" colorFamily="boire" />
 
         <Hero
           key={heroPost.slug}
@@ -29,10 +30,13 @@ export default function Index({ allPosts }) {
           id={heroPost.id}
           excerpt={heroPost.excerpt}
         />
+      </section>
 
-        <h1 className="text-4xl font-bold text-boire-500">
-          Toutes les recettes de cocktails
-        </h1>
+      <section className="grid grid-flow-row gap-8 mt-10">
+        <SectionTitle
+          title="Toutes les recettes de cocktails"
+          colorFamily="boire"
+        />
 
         <div className="grid grid-cols-1 gap-6 mb-32 xs:grid-cols-2">
           {morePosts.map((post) => (
@@ -48,7 +52,7 @@ export default function Index({ allPosts }) {
             />
           ))}
         </div>
-      </div>
+      </section>
     </>
   );
 }
