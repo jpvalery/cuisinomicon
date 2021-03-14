@@ -1,4 +1,4 @@
-import "tailwindcss/tailwind.css";
+import "../styles/globals.css";
 
 import React, { useEffect } from "react";
 import Router from "next/router";

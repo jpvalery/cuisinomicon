@@ -2,3 +2,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.border-gradient-boire {
+    border-image-slice: 1;
+    border-image-source: linear-gradient(45deg, rgba(219,39,119,1) 0%, rgba(236,72,153,1) 50%, rgba(219,39,119,1) 100%);
+}
+
+.border-gradient-manger {
+    border-image-slice: 1;
+    border-image-source: linear-gradient(45deg, rgba(16,185,129,1) 0%, rgba(5,150,105,1) 50%, rgba(16,185,129,1) 100%);
+}
+
+.border-gradient-brand {
+    border-image-slice: 1;
+    border-image-source: linear-gradient(45deg, rgba(221,80,55,1) 0%, rgba(225,29,72,1) 50%, rgba(221,80,55,1) 100%);
+}
+
+.corner-tlbr-boire {
+    color: #EC4899;
+}
+
+.corner-trbl-boire {
+    color: #DB2777;
+}
+
+.corner-tlbr-manger {
+    color: #059669;
+}
+
+.corner-trbl-manger {
+    color: #10B981;
+}
+
+.corner-tlbr-brand {
+    color: #E11D48;
+}
+
+.corner-trbl-brand {
+    color: #DD5037;
+}

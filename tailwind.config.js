@@ -18,6 +18,12 @@ module.exports = {
         manger: colors.emerald,
         boire: colors.pink,
       },
+      width: {
+        "9/10": "96%",
+      },
+      height: {
+        "9/10": "97%",
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {

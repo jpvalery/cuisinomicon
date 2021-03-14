@@ -49,6 +49,7 @@ export default function Index({ allPosts }) {
               id={post.id}
               slug={`/manger/${post.slug}`}
               excerpt={post.excerpt}
+              category="manger"
             />
           ))}
         </div>

@@ -5,7 +5,7 @@ export default function CocktailLong() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      viewBox="0 0 24 32"
+      viewBox="0 0 28 32"
       fill="currentColor"
     >
       <path d="M19 32H6V6h13v26zM8 30h9V8H8v22z"></path>

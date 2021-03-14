@@ -5,7 +5,7 @@ export default function Champagne() {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      viewBox="0 0 16 32"
+      viewBox="0 0 24 32"
       fill="currentColor"
     >
       <path d="M6 8H10V10H6z"></path>
