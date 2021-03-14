@@ -3,7 +3,8 @@ const description = "Recettes de cuisine et de cocktails cabalistiques";
 const siteUrl = "https://cuisinomicon.com";
 
 const SEO = {
-  title: title,
+  titleTemplate: `%s | ${title}`,
+  defaultTitle: title,
   description: description,
   canonical: siteUrl,
   openGraph: {

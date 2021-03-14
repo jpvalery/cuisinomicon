@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import ErrorPage from "next/error";
+import { NextSeo } from "next-seo";
 
 import { getPostBySlug, getAllPosts } from "../../lib/apiM";
 
@@ -12,23 +13,32 @@ export default function Post({ post, morePosts, preview }) {
     return <ErrorPage statusCode={404} />;
   }
   return (
-    <main>
-      {router.isFallback ? (
-        <RecipeSkeleton />
-      ) : (
-        <Recipe
-          title={post.title}
-          date={post.date}
-          slug={post.slug}
-          id={post.id}
-          author={post.author}
-          content={post.content}
-          ogImage={post.ogImage}
-          coverImage={post.coverImage}
-          category="manger"
-        />
-      )}
-    </main>
+    <>
+      <NextSeo
+        title={post.title}
+        description={post.excerpt}
+        openGraph={{
+          images: [{ url: `https://cuisinomicon.com${post.ogImage.url}` }],
+        }}
+      />
+      <main>
+        {router.isFallback ? (
+          <RecipeSkeleton />
+        ) : (
+          <Recipe
+            title={post.title}
+            date={post.date}
+            slug={post.slug}
+            id={post.id}
+            author={post.author}
+            content={post.content}
+            ogImage={post.ogImage}
+            coverImage={post.coverImage}
+            category="manger"
+          />
+        )}
+      </main>
+    </>
   );
 }
 
@@ -37,6 +47,7 @@ export async function getStaticProps({ params }) {
     "title",
     "date",
     "slug",
+    "excerpt",
     "id",
     "author",
     "content",
