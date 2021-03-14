@@ -1,4 +1,4 @@
-const title = "Cuisinomicon 👨‍🍳";
+const title = "Cuisinomicon 𖤐";
 const description = "Recettes de cuisine et de cocktails cabalistiques";
 const siteUrl = "https://cuisinomicon.com";
 
