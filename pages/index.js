@@ -81,8 +81,6 @@ export async function getStaticProps() {
 
   const allPosts = { latestB, latestM };
 
-  console.log(allPosts);
-
   return {
     props: { allPosts },
   };

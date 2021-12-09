@@ -2,8 +2,7 @@ const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
-  purge: ["./pages/**/*.js", "./components/**/*.js", "./elements/**/*.js"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./pages/**/*.js", "./components/**/*.js", "./elements/**/*.js"],
   theme: {
     screens: {
       xs: "540px",
@@ -39,9 +38,6 @@ module.exports = {
         "pulse-slow": "pulse 3s infinite",
       },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [require("@tailwindcss/typography")],
 };
