@@ -15,7 +15,7 @@ export default function Footer() {
         </div>
         <div className="mt-4 md:mt-0 md:order-1">
           <p className="text-sm text-center text-gray-500 md:text-base">
-            &copy; 2021 Cuisinomicon by{" "}
+            &copy; 2021-2022 Cuisinomicon by{" "}
             <a
               href="https://jpvalery.me"
               className="hover:text-gray-400"
