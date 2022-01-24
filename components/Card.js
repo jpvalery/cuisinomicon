@@ -18,10 +18,10 @@ const Card = (props) => {
 
   return (
     <NextLink href={props.slug}>
-      <div className="relative text-black cursor-pointer bg-gradient-to-bl from-yellow-100 via-yellow-50 to-yellow-100 ring-gray-800 ring-8 rounded-xl opacity-90 hover:opacity-100">
-        <article className="relative z-10 grid items-center grid-flow-row gap-2 mx-4 my-8">
+      <div className="relative cursor-pointer rounded-xl bg-gradient-to-bl from-yellow-100 via-yellow-50 to-yellow-100 text-black opacity-90 ring-8 ring-gray-800 hover:opacity-100">
+        <article className="relative z-10 mx-4 my-8 grid grid-flow-row items-center gap-2">
           <div className="text-center">
-            <span className="font-black text-wl">- {roman} -</span>
+            <span className="text-wl font-black">- {roman} -</span>
             <h1 className="text-xl font-bold">{props.title}</h1>
           </div>
           <div className="mx-auto my-3">
@@ -34,12 +34,12 @@ const Card = (props) => {
               className="rounded-md"
             />
           </div>
-          <div className="grid items-center justify-center grid-flow-col gap-2 pb-2 mx-auto text-base border-b-2 border-black border-opacity-60 max-w-max">
+          <div className="mx-auto grid max-w-max grid-flow-col items-center justify-center gap-2 border-b-2 border-black border-opacity-60 pb-2 text-base">
             <p>{friendlyDate}</p>
             <p>⏾</p>
             <p>{props.author}</p>
           </div>
-          <p className="h-48 p-4 text-base italic text-center">
+          <p className="h-48 p-4 text-center text-base italic">
             {props.excerpt}
           </p>
         </article>

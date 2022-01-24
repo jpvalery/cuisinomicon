@@ -18,9 +18,9 @@ function MyApp({ Component, pageProps }) {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
       <DefaultSeo {...SEO} />
-      <div className="pb-6 mx-auto">
+      <div className="mx-auto pb-6">
         <Header />
-        <div className="max-w-4xl px-6 py-12 mx-auto">
+        <div className="mx-auto max-w-4xl px-6 py-12">
           <Component {...pageProps} />
         </div>
         <Footer />

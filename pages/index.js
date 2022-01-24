@@ -17,11 +17,11 @@ export default function Home({ allPosts }) {
       />
       <main>
         <section>
-          <div className="max-w-2xl pb-6 mx-auto animate-pulse-slow text-brand-600">
+          <div className="mx-auto max-w-2xl animate-pulse-slow pb-6 text-brand-600">
             <Logo />
             <h1 className="sr-only">Cuisinomicon</h1>
           </div>
-          <p className="text-4xl font-bold text-center">
+          <p className="text-center text-4xl font-bold">
             Recettes de cuisine cabalistiques
           </p>
         </section>

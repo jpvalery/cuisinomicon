@@ -17,7 +17,7 @@ const Hero = (props) => {
   return (
     <section className="mb-6">
       <NextLink href={props.slug}>
-        <div className="relative cursor-pointer max-w-max opacity-90 hover:opacity-100">
+        <div className="relative max-w-max cursor-pointer opacity-90 hover:opacity-100">
           <div className="relative flex">
             <Image
               src={props.coverImage}
@@ -29,9 +29,9 @@ const Hero = (props) => {
             />
           </div>
 
-          <div className="absolute bottom-0 w-full h-full">
-            <div className="z-50 grid items-center h-full p-6 rounded-lg from-overlayg1-600 to-overlayg2-600 bg-gradient-to-l bg-clip-border">
-              <div className="grid w-5/12 grid-flow-row gap-6 mt-auto ml-auto">
+          <div className="absolute bottom-0 h-full w-full">
+            <div className="z-50 grid h-full items-center rounded-lg bg-gradient-to-l from-overlayg1-600 to-overlayg2-600 bg-clip-border p-6">
+              <div className="mt-auto ml-auto grid w-5/12 grid-flow-row gap-6">
                 <div className="text-center">
                   <span className="text-sm font-black xs:text-lg">
                     — {roman} –{" "}
@@ -40,12 +40,12 @@ const Hero = (props) => {
                     {props.title}
                   </h1>
                 </div>
-                <div className="items-center justify-center hidden grid-flow-col gap-2 pb-4 mx-auto text-base border-b-2 border-white border-opacity-60 xs:grid max-w-max">
+                <div className="mx-auto hidden max-w-max grid-flow-col items-center justify-center gap-2 border-b-2 border-white border-opacity-60 pb-4 text-base xs:grid">
                   <p>{friendlyDate}</p>
                   <p>⏾</p>
                   <p>{props.author}</p>
                 </div>
-                <p className="hidden mx-auto text-base italic text-center md:inline">
+                <p className="mx-auto hidden text-center text-base italic md:inline">
                   {props.excerpt}
                 </p>
               </div>

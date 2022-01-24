@@ -32,13 +32,13 @@ export default function Index({ allPosts }) {
         />
       </section>
 
-      <section className="grid grid-flow-row gap-8 mt-10">
+      <section className="mt-10 grid grid-flow-row gap-8">
         <SectionTitle
           title="Toutes les recettes de cocktails"
           colorFamily="boire"
         />
 
-        <div className="grid grid-cols-1 gap-6 mb-32 xs:grid-cols-2">
+        <div className="mb-32 grid grid-cols-1 gap-6 xs:grid-cols-2">
           {morePosts.map((post) => (
             <Card
               key={post.slug}

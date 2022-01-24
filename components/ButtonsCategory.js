@@ -7,21 +7,21 @@ import Lemonade from "../elements/iconset/Lemonade";
 
 export default function ButtonsCategory() {
   return (
-    <section className="grid items-center justify-center grid-flow-row gap-8 py-20 md:grid-flow-col">
+    <section className="grid grid-flow-row items-center justify-center gap-8 py-20 md:grid-flow-col">
       <NextLink href="/manger">
-        <div className="inline-flex items-center px-4 py-3 text-xl font-medium text-white border border-transparent rounded-md shadow-sm cursor-pointer md:w-72 bg-manger-600 hover:bg-manger-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-manger-200">
-          <div className="w-6 h-6 mr-4">
+        <div className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-manger-600 px-4 py-3 text-xl font-medium text-white shadow-sm hover:bg-manger-700 focus:outline-none focus:ring-2 focus:ring-manger-200 focus:ring-offset-2 md:w-72">
+          <div className="mr-4 h-6 w-6">
             <CuttingBoard />
           </div>
           Recettes à manger&nbsp;→
         </div>
       </NextLink>
-      <div className="hidden w-8 h-8 -ml-1 text-brand-600 md:inline">
+      <div className="-ml-1 hidden h-8 w-8 text-brand-600 md:inline">
         <CookBook />
       </div>
       <NextLink href="/boire">
-        <div className="inline-flex items-center px-6 py-3 text-xl font-medium text-white border border-transparent rounded-md shadow-sm cursor-pointer md:w-72 bg-boire-600 hover:bg-boire-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-boire-200">
-          <div className="w-6 h-6 mr-4">
+        <div className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-boire-600 px-6 py-3 text-xl font-medium text-white shadow-sm hover:bg-boire-700 focus:outline-none focus:ring-2 focus:ring-boire-200 focus:ring-offset-2 md:w-72">
+          <div className="mr-4 h-6 w-6">
             <Lemonade />
           </div>
           Recettes à boire&nbsp;→

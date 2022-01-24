@@ -29,7 +29,7 @@ const CardBorder = (props) => {
     cornerIconTopLeft = <Bakery />;
     cornerIconTopRight = <Chopsticks />;
     cornerIconBottomLeft = (
-      <div className="transform rotate-45">
+      <div className="rotate-45 transform">
         <Cover />
       </div>
     );
@@ -39,22 +39,22 @@ const CardBorder = (props) => {
     cornerColor = "corner-tlbr-boire";
     cornerColorOpposite = "corner-trbl-boire";
     cornerIconTopLeft = (
-      <div className="transform rotate-45">
+      <div className="rotate-45 transform">
         <Cocktail />
       </div>
     );
     cornerIconTopRight = (
-      <div className="transform rotate-45">
+      <div className="rotate-45 transform">
         <CocktailLong />
       </div>
     );
     cornerIconBottomLeft = (
-      <div className="transform rotate-45">
+      <div className="rotate-45 transform">
         <Chemistry />
       </div>
     );
     cornerIconBottomRight = (
-      <div className="transform rotate-45">
+      <div className="rotate-45 transform">
         <Champagne />
       </div>
     );
@@ -65,7 +65,7 @@ const CardBorder = (props) => {
     cornerIconTopLeft = <Hatchet />;
     cornerIconTopRight = <Chopsticks />;
     cornerIconBottomLeft = (
-      <div className="transform rotate-45">
+      <div className="rotate-45 transform">
         <Takeout />
       </div>
     );
@@ -76,31 +76,31 @@ const CardBorder = (props) => {
     <>
       <div
         id="border"
-        className={`absolute border-2 inset-2 w-9/10 h-9/10 ${borderColor}`}
+        className={`absolute inset-2 h-9/10 w-9/10 border-2 ${borderColor}`}
       ></div>
       <div
         id="corner-tl"
-        className={`absolute transform rotate-90 bg-yellow-50 top-2 left-2 ${cornerColor}`}
+        className={`absolute top-2 left-2 rotate-90 transform bg-yellow-50 ${cornerColor}`}
       >
-        <div className="w-6 h-6 p-0.5">{cornerIconTopLeft}</div>
+        <div className="h-6 w-6 p-0.5">{cornerIconTopLeft}</div>
       </div>
       <div
         id="corne-tr"
-        className={`absolute transform rotate-180 bg-yellow-100 top-2 right-2 ${cornerColorOpposite}`}
+        className={`absolute top-2 right-2 rotate-180 transform bg-yellow-100 ${cornerColorOpposite}`}
       >
-        <div className="w-6 h-6 p-0.5">{cornerIconTopRight}</div>
+        <div className="h-6 w-6 p-0.5">{cornerIconTopRight}</div>
       </div>
       <div
         id="corner-br"
-        className={`absolute transform -rotate-90 bg-yellow-50 bottom-2 right-2 ${cornerColor}`}
+        className={`absolute bottom-2 right-2 -rotate-90 transform bg-yellow-50 ${cornerColor}`}
       >
-        <div className="w-6 h-6 p-0.5">{cornerIconBottomLeft}</div>
+        <div className="h-6 w-6 p-0.5">{cornerIconBottomLeft}</div>
       </div>
       <div
         id="corner-bl"
-        className={`absolute bg-yellow-100 bottom-2 left-2 ${cornerColorOpposite}`}
+        className={`absolute bottom-2 left-2 bg-yellow-100 ${cornerColorOpposite}`}
       >
-        <div className="w-6 h-6 p-0.5">{cornerIconBottomRight}</div>
+        <div className="h-6 w-6 p-0.5">{cornerIconBottomRight}</div>
       </div>
     </>
   );
