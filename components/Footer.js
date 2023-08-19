@@ -15,7 +15,7 @@ export default function Footer() {
         </div>
         <div className="mt-4 md:order-1 md:mt-0">
           <p className="text-center text-sm text-gray-500 md:text-base">
-            &copy; 2021-{new Date().getFullYear()} Cuisinomicon by{" "}
+            &copy; 2021-{new Date().getFullYear()} Cuisinomicon par{" "}
             <a
               href="https://jpvalery.me"
               className="hover:text-gray-400"
@@ -23,7 +23,7 @@ export default function Footer() {
             >
               Jp Valery
             </a>
-            . All rights reserved.
+            . Tous droits réservés.
           </p>
         </div>
       </div>

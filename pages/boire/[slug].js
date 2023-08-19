@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
-import ErrorPage from "next/error";
 import { NextSeo } from "next-seo";
+import ErrorPage from "next/error";
+import { useRouter } from "next/router";
 
-import { getPostBySlug, getAllPosts } from "../../lib/apiB";
+import { getAllPosts, getPostBySlug } from "../../lib/apiB";
 
 import Recipe from "../../components/Recipe";
 import RecipeSkeleton from "../../components/RecipeSkeleton";
@@ -34,6 +34,7 @@ export default function Post({ post, morePosts, preview }) {
             content={post.content}
             ogImage={post.ogImage}
             coverImage={post.coverImage}
+            recipeJson={post.RecipeJson}
             category="boire"
           />
         )}
@@ -54,6 +55,7 @@ export async function getStaticProps({ params }) {
     "ogImage",
     "coverImage",
     "content",
+    "RecipeJson",
   ]);
 
   return {

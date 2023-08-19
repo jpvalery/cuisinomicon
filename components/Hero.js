@@ -27,8 +27,9 @@ const Hero = (props) => {
               className="rounded-lg"
               style={{
                 maxWidth: "100%",
-                height: "auto"
-              }} />
+                height: "auto",
+              }}
+            />
           </div>
 
           <div className="absolute bottom-0 h-full w-full">

@@ -31,7 +31,7 @@ const Card = (props) => {
               width={420}
               height={280}
               className="rounded-md aspect-video"
-               />
+            />
           </div>
           <div className="mx-auto grid max-w-max grid-flow-col items-center justify-center gap-2 border-b-2 border-black border-opacity-60 pb-2 text-base">
             <p>{friendlyDate}</p>
