@@ -194,8 +194,11 @@ const Recipe = (props) => {
         <h2>Instructions</h2>
         <div className="grid grid-flow-row gap-4 pl-4">
           {instructions.map((instruction, index) => (
-            <div className="grid grid-flow-col gap-2 items-center">
-              <div key={instruction.name}>
+            <div
+              key={instruction.name}
+              className="grid grid-flow-col gap-2 items-center"
+            >
+              <div>
                 <h3 className="m-0">
                   {index + 1}. {instruction.name}
                 </h3>
