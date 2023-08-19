@@ -4,7 +4,7 @@ import remark2react from "remark-react";
 
 import romanNumeral from "../lib/romanNumeral";
 
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 import CookBook from "../elements/iconset/CookBook";
 import CuttingBoard from "../elements/iconset/CuttingBoard";
