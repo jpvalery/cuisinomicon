@@ -202,12 +202,14 @@ const Recipe = (props) => {
                 <p>{instruction.text}</p>
               </div>
               <div className="relative w-32 h-32 m-0 p-0">
-                <Image
-                  src={instruction.image}
-                  alt={instruction.text}
-                  fill
-                  className="object-cover"
-                />
+                {instruction?.image ? (
+                  <Image
+                    src={instruction.image}
+                    alt={instruction.text}
+                    fill
+                    className="object-cover"
+                  />
+                ) : null}
               </div>
             </div>
           ))}
