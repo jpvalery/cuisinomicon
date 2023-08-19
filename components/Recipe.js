@@ -4,7 +4,7 @@ import remark2react from "remark-react";
 
 import romanNumeral from "../lib/romanNumeral";
 
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import CookBook from "../elements/iconset/CookBook";
 import CuttingBoard from "../elements/iconset/CuttingBoard";
@@ -43,42 +43,42 @@ const Recipe = (props) => {
     borderColor = "border-brand-600";
   }
 
-  return (
-    <>
-      <div>
-        <div className={`text-center text-3xl font-bold ${textColor}`}>
-          — {roman} —
-        </div>
-
-        <h1 className="text-center text-5xl font-bold">{props.title}</h1>
-        <div className="m-4">
-          <Image
-            src={props.coverImage}
-            alt={props.title}
-            width="960"
-            height="540"
-            layout="intrinsic"
-          />
-        </div>
-        <div
-          className={`grid grid-flow-col items-center justify-center gap-8 border-b-2 pb-4 text-base md:text-lg ${borderColor} border-opacity-60`}
-        >
-          <p className="text-right md:w-32">{friendlyDate}</p>
-          <div className={`h-6 w-6 ${textColor} -ml-1`}>
-            {(() => {
-              if (props.category == "manger") return <CuttingBoard />;
-              if (props.category == "boire") return <Lemonade />;
-              else return <CookBook />;
-            })()}
-          </div>
-          <p className="text-left md:w-32">{props.author.name}</p>
-        </div>
+  return <>
+    <div>
+      <div className={`text-center text-3xl font-bold ${textColor}`}>
+        — {roman} —
       </div>
-      <article className={`prose prose-xl py-12 ${proseColor}`}>
-        {content}
-      </article>
-    </>
-  );
+
+      <h1 className="text-center text-5xl font-bold">{props.title}</h1>
+      <div className="m-4">
+        <Image
+          src={props.coverImage}
+          alt={props.title}
+          width="960"
+          height="540"
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
+      </div>
+      <div
+        className={`grid grid-flow-col items-center justify-center gap-8 border-b-2 pb-4 text-base md:text-lg ${borderColor} border-opacity-60`}
+      >
+        <p className="text-right md:w-32">{friendlyDate}</p>
+        <div className={`h-6 w-6 ${textColor} -ml-1`}>
+          {(() => {
+            if (props.category == "manger") return <CuttingBoard />;
+            if (props.category == "boire") return <Lemonade />;
+            else return <CookBook />;
+          })()}
+        </div>
+        <p className="text-left md:w-32">{props.author.name}</p>
+      </div>
+    </div>
+    <article className={`prose prose-xl py-12 ${proseColor}`}>
+      {content}
+    </article>
+  </>;
 };
 
 export default Recipe;

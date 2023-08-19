@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import romanNumeral from "../lib/romanNumeral";
 
@@ -24,9 +24,11 @@ const Hero = (props) => {
               alt={props.title}
               width={960}
               height={640}
-              layout="intrinsic"
               className="rounded-lg"
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           </div>
 
           <div className="absolute bottom-0 h-full w-full">

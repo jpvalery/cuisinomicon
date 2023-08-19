@@ -1,5 +1,5 @@
 import NextLink from "next/link";
-import Image from "next/legacy/image";
+import Image from "next/image";
 
 import romanNumeral from "../lib/romanNumeral";
 
@@ -30,9 +30,11 @@ const Card = (props) => {
               alt={props.title}
               width={420}
               height={280}
-              layout="intrinsic"
               className="rounded-md"
-            />
+              style={{
+                maxWidth: "100%",
+                height: "auto"
+              }} />
           </div>
           <div className="mx-auto grid max-w-max grid-flow-col items-center justify-center gap-2 border-b-2 border-black border-opacity-60 pb-2 text-base">
             <p>{friendlyDate}</p>
