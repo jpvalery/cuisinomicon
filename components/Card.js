@@ -1,5 +1,5 @@
-import NextLink from "next/link";
 import Image from "next/image";
+import NextLink from "next/link";
 
 import romanNumeral from "../lib/romanNumeral";
 
@@ -18,23 +18,20 @@ const Card = (props) => {
 
   return (
     <NextLink href={props.slug}>
-      <div className="relative cursor-pointer rounded-xl bg-gradient-to-bl from-yellow-100 via-yellow-50 to-yellow-100 text-black opacity-90 ring-8 ring-gray-800 hover:opacity-100">
-        <article className="relative z-10 mx-4 my-8 grid grid-flow-row items-center gap-2">
+      <div className="relative cursor-pointer rounded-xl bg-gradient-to-bl from-yellow-100 via-yellow-50 to-yellow-100 text-black opacity-90 ring-8 ring-gray-800 hover:opacity-100 h-[36rem]">
+        <article className="relative top-0 z-10 px-4 py-8 grid grid-flow-row items-center gap-2">
           <div className="text-center">
             <span className="text-wl font-black">- {roman} -</span>
             <h1 className="text-xl font-bold">{props.title}</h1>
           </div>
-          <div className="mx-auto my-3">
+          <div className="mx-auto py-3">
             <Image
               src={props.coverImage}
               alt={props.title}
               width={420}
               height={280}
-              className="rounded-md"
-              style={{
-                maxWidth: "100%",
-                height: "auto"
-              }} />
+              className="rounded-md aspect-video"
+               />
           </div>
           <div className="mx-auto grid max-w-max grid-flow-col items-center justify-center gap-2 border-b-2 border-black border-opacity-60 pb-2 text-base">
             <p>{friendlyDate}</p>
