@@ -74,11 +74,7 @@ const Recipe = (props) => {
 
         <h1 className="text-center text-5xl font-bold">{props.title}</h1>
         <div className="m-4 w-full aspect-video relative">
-          <Image
-            src={props.coverImage}
-            alt={props.title}
-            fill
-          />
+          <Image src={props.coverImage} alt={props.title} fill />
         </div>
         <div
           className={`grid grid-flow-col items-center justify-center gap-8 border-b-2 pb-4 text-base md:text-lg ${borderColor} border-opacity-60`}
