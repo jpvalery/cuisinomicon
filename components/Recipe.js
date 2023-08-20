@@ -92,13 +92,13 @@ const Recipe = (props) => {
       </div>
 
       <div className="mx-auto max-w-fit">
-        <div className="grid grid-cols-1 gap-px sm:grid-cols-3 items-start justify-center">
+        <div className="grid gap-px grid-cols-3 items-start justify-center">
           <div className="p-6">
             <p className="text-base font-medium leading-6 text-gray-200">
               Préparation
             </p>
-            <p className="mt-2 flex items-baseline gap-x-2">
-              <span className="text-3xl font-semibold tracking-tight text-white">
+            <p className="mt-2 grid grid-flow-row sm:grid-flow-col justify-center sm:justify-around items-baseline gap-x-2">
+              <span className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
                 {recipeJson.prepTime.replace("PT", "").slice(0, -1)}
               </span>
               <span className="text-xs text-gray-400">
@@ -123,8 +123,8 @@ const Recipe = (props) => {
             <p className="text-base font-medium leading-6 text-gray-200">
               Cuisson
             </p>
-            <p className="mt-2 flex items-baseline gap-x-2">
-              <span className="text-3xl font-semibold tracking-tight text-white">
+            <p className="mt-2 grid grid-flow-row sm:grid-flow-col justify-center sm:justify-around items-baseline gap-x-2">
+              <span className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
                 {recipeJson.cookTime.replace("PT", "").slice(0, -1)}
               </span>
               <span className="text-xs text-gray-400">
@@ -149,8 +149,8 @@ const Recipe = (props) => {
             <p className="text-base font-medium leading-6 text-gray-200">
               Total
             </p>
-            <p className="mt-2 flex items-baseline gap-x-2">
-              <span className="text-3xl font-semibold tracking-tight text-white">
+            <p className="mt-2 grid grid-flow-row sm:grid-flow-col justify-center sm:justify-around items-baseline gap-x-2">
+              <span className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">
                 {recipeJson.totalTime.replace("PT", "").slice(0, -1)}
               </span>
               <span className="text-xs text-gray-400">
@@ -173,7 +173,7 @@ const Recipe = (props) => {
         </div>
       </div>
       <article
-        className={`prose prose-xl prose-li:m-0 prose-img:m-0 py-12 ${proseColor}`}
+        className={`prose prose-xl prose-li:m-0 prose-img:m-0 py-6 ${proseColor}`}
       >
         {content}
         <h2>Ingrédients</h2>
@@ -187,7 +187,7 @@ const Recipe = (props) => {
           {instructions.map((instruction, index) => (
             <div
               key={instruction.name}
-              className="grid grid-flow-col gap-2 items-center justify-between"
+              className="grid grid-flow-row sm:grid-flow-col gap-2 items-center justify-between"
             >
               <div>
                 <h3 className="m-0">
@@ -195,16 +195,16 @@ const Recipe = (props) => {
                 </h3>
                 <p>{instruction.text}</p>
               </div>
-              <div className="relative w-32 h-32">
-                {instruction?.image ? (
+              {instruction?.image ? (
+                <div className="relative w-32 h-32">
                   <Image
                     src={instruction.image}
                     alt={instruction.text}
                     fill
                     className="object-cover"
                   />
-                ) : null}
-              </div>
+                </div>
+              ) : null}
             </div>
           ))}
         </div>
