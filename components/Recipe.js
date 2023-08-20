@@ -73,16 +73,11 @@ const Recipe = (props) => {
         </div>
 
         <h1 className="text-center text-5xl font-bold">{props.title}</h1>
-        <div className="m-4">
+        <div className="m-4 w-full aspect-video relative">
           <Image
             src={props.coverImage}
             alt={props.title}
-            width="960"
-            height="540"
-            style={{
-              maxWidth: "100%",
-              height: "auto",
-            }}
+            fill
           />
         </div>
         <div
@@ -182,7 +177,7 @@ const Recipe = (props) => {
         </div>
       </div>
       <article
-        className={`prose prose-xl prose-li:m-0 prose-img:m-2 py-12 ${proseColor}`}
+        className={`prose prose-xl prose-li:m-0 prose-img:m-0 py-12 ${proseColor}`}
       >
         {content}
         <h2>Ingrédients</h2>
@@ -192,11 +187,11 @@ const Recipe = (props) => {
           ))}
         </ul>
         <h2>Instructions</h2>
-        <div className="grid grid-flow-row gap-4 pl-4">
+        <div className="grid grid-flow-row gap-x-8 gap-y-12 pl-4">
           {instructions.map((instruction, index) => (
             <div
               key={instruction.name}
-              className="grid grid-flow-col gap-2 items-center"
+              className="grid grid-flow-col gap-2 items-center justify-between"
             >
               <div>
                 <h3 className="m-0">
@@ -204,7 +199,7 @@ const Recipe = (props) => {
                 </h3>
                 <p>{instruction.text}</p>
               </div>
-              <div className="relative w-32 h-32 m-0 p-0">
+              <div className="relative w-32 h-32">
                 {instruction?.image ? (
                   <Image
                     src={instruction.image}
