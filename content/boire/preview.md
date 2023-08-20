@@ -9,6 +9,29 @@ author:
   picture: "/assets/authors/joe.jpeg"
 ogImage:
   url: "/assets/cover/food-1.jpg"
+RecipeJson:
+  prepTime: "PT20M"
+  cookTime: "PT5M"
+  totalTime: "PT25M"
+  keywords: ""
+  yields: "1"
+  category: "Repas"
+  cuisine: "Française"
+  images:
+    []
+  ingredients:
+    [
+      "Sit Dolor Amet",
+      "Lorem ipsum"
+    ]
+  instructions:
+    [
+      {
+        name: "Mise en place",
+        text: "Préparer",
+        image: "",
+      },
+    ]
 ---
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus. Praesent elementum facilisis leo vel fringilla. Congue mauris rhoncus aenean vel. Egestas sed tempus urna et pharetra pharetra massa massa ultricies.
