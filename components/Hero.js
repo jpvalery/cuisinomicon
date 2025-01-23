@@ -33,7 +33,7 @@ const Hero = (props) => {
           </div>
 
           <div className="absolute bottom-0 h-full w-full">
-            <div className="z-50 grid h-full items-center rounded-lg bg-gradient-to-l from-overlayg1-600 to-overlayg2-600 bg-clip-border p-6">
+            <div className="z-50 grid h-full items-center rounded-lg bg-linear-to-l from-overlayg1-600 to-overlayg2-600 bg-clip-border p-6">
               <div className="mt-auto ml-auto grid w-5/12 grid-flow-row gap-6">
                 <div className="text-center">
                   <span className="text-sm font-black xs:text-lg">

@@ -9,7 +9,7 @@ export default function ButtonsCategory() {
   return (
     <section className="grid grid-flow-row items-center justify-center gap-8 py-20 md:grid-flow-col">
       <NextLink href="/manger">
-        <div className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-manger-600 px-4 py-3 text-xl font-medium text-white shadow-sm hover:bg-manger-700 focus:outline-none focus:ring-2 focus:ring-manger-200 focus:ring-offset-2 md:w-72">
+        <div className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-manger-600 px-4 py-3 text-xl font-medium text-white shadow-xs hover:bg-manger-700 focus:outline-hidden focus:ring-2 focus:ring-manger-200 focus:ring-offset-2 md:w-72">
           <div className="mr-4 h-6 w-6">
             <CuttingBoard />
           </div>
@@ -20,7 +20,7 @@ export default function ButtonsCategory() {
         <CookBook />
       </div>
       <NextLink href="/boire">
-        <div className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-boire-600 px-6 py-3 text-xl font-medium text-white shadow-sm hover:bg-boire-700 focus:outline-none focus:ring-2 focus:ring-boire-200 focus:ring-offset-2 md:w-72">
+        <div className="inline-flex cursor-pointer items-center rounded-md border border-transparent bg-boire-600 px-6 py-3 text-xl font-medium text-white shadow-xs hover:bg-boire-700 focus:outline-hidden focus:ring-2 focus:ring-boire-200 focus:ring-offset-2 md:w-72">
           <div className="mr-4 h-6 w-6">
             <Lemonade />
           </div>

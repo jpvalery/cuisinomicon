@@ -18,7 +18,7 @@ const Card = (props) => {
 
   return (
     <NextLink href={props.slug}>
-      <div className="relative cursor-pointer rounded-xl bg-gradient-to-bl from-yellow-100 via-yellow-50 to-yellow-100 text-black opacity-90 ring-8 ring-gray-800 hover:opacity-100 h-[36rem]">
+      <div className="relative cursor-pointer rounded-xl bg-linear-to-bl from-yellow-100 via-yellow-50 to-yellow-100 text-black opacity-90 ring-8 ring-gray-800 hover:opacity-100 h-[36rem]">
         <article className="relative top-0 z-10 px-4 py-8 grid grid-flow-row items-center gap-2">
           <div className="text-center">
             <span className="text-wl font-black">- {roman} -</span>
