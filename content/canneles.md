@@ -10,7 +10,7 @@ ogImage:
   url: "/assets/cover/canneles.jpg"
 RecipeJson:
   prepTime: "PT1H00M"
-  cookTime: "PT1h10M"
+  cookTime: "PT1H10M"
   totalTime: "PT2H30M"
   keywords: "cannelés"
   yields: "12"
