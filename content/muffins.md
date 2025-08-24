@@ -51,7 +51,7 @@ RecipeJson:
       },
       {
         name: "Cuire",
-        text: "Cuire dans une poêle à feau moyen, couvert, pendant 5 minutes. Retourner à mi-cuisson",
+        text: "Cuire dans une poêle à feu moyen, couvert, pendant 5 minutes. Retourner à mi-cuisson",
         image: "",
       },
       { name: "Déguster", text: "Bon appétit!", image: "" },

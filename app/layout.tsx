@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Recipe Collection",
   description: "A curated collection of delicious recipes",
   generator: "v0.app",
+  metadataBase: new URL("https://cuisinomicon.com"),
 };
 
 export default function RootLayout({

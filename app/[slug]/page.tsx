@@ -9,7 +9,7 @@ interface RecipePageProps {
 }
 
 export async function generateMetadata({ params }: RecipePageProps) {
-  const { slug } = await params; // ✅ await params
+  const { slug } = await params;
   const recipe = await getRecipeBySlug(slug);
 
   if (!recipe) {
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: RecipePageProps) {
       description: recipe.excerpt,
       images: [
         {
-          url: recipe.ogImage.url,
+          url: recipe?.ogImage?.url ?? "/static/og-banner.jpg",
           width: 1200,
           height: 630,
           alt: recipe.title,
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: RecipePageProps) {
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
-  const { slug } = await params; // ✅ await params
+  const { slug } = await params;
   const recipe = await getRecipeBySlug(slug);
 
   if (!recipe) {
