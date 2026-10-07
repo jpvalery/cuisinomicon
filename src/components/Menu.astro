@@ -1,0 +1,195 @@
+---
+import { CONTACT_EMAIL, LANG, LOCALES, type Locale, t } from "../i18n/ui";
+import { THEMES } from "../lib/site";
+
+interface Props {
+  locale: Locale;
+  /** This page in every locale; pages without a translation point to that locale's home. */
+  alternates: Record<Locale, string>;
+}
+
+const { locale, alternates } = Astro.props;
+const s = t(locale).menu;
+const themeNames = { ticket: "Ticket", arcanes: "Arcanes" } as const;
+const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Cuisinomicon")}`;
+---
+
+<button
+  type="button"
+  data-menu-open
+  aria-haspopup="dialog"
+  aria-controls="menu"
+  aria-keyshortcuts="Meta+K Control+K"
+  class="flex shrink-0 cursor-pointer items-center gap-2.5 ticket:border-2 ticket:border-ink ticket:bg-paper ticket:px-2.5 ticket:py-1 ticket:text-[13px]/[1.2] ticket:font-bold ticket:hover:bg-ink ticket:hover:text-paper arcanes:rounded-full arcanes:border-2 arcanes:border-card arcanes:px-4 arcanes:pt-1.5 arcanes:pb-1 arcanes:font-caps arcanes:text-[17px]/[1.2] arcanes:hover:border-gold arcanes:hover:text-gold"
+>
+  <span>{s.open}</span>
+  <kbd
+    data-shortcut
+    class="pointer-coarse:hidden ticket:border ticket:border-current ticket:px-1 ticket:text-[11px] ticket:font-normal arcanes:font-sans arcanes:text-[13px] arcanes:text-mist"
+    >⌘K</kbd
+  >
+</button>
+
+<dialog
+  id="menu"
+  aria-labelledby="menu-title"
+  class="m-auto max-h-dvh overflow-visible bg-transparent p-0 ticket:backdrop:bg-[rgb(0_0_0/0.35)] arcanes:backdrop:bg-[rgb(14_20_46/0.82)]"
+>
+  <div class="menu-panel tear-top tear-bottom">
+    <div class="mb-2 flex items-start justify-between gap-4">
+      <h2 id="menu-title" class="menu-title">{s.title}</h2>
+      <button type="button" data-menu-close class="menu-close">{s.close}</button>
+    </div>
+
+    <section aria-labelledby="menu-style">
+      <h3 id="menu-style" class="menu-h">{s.style}</h3>
+      <ul>
+        {
+          THEMES.map((theme) => (
+            <li>
+              <button
+                type="button"
+                class="menu-item"
+                data-menu-item
+                data-set-theme={theme}
+                aria-pressed="false"
+              >
+                <span class="menu-mark" aria-hidden="true" />
+                <span class="menu-label">
+                  <span>{themeNames[theme]}</span>
+                  <small>{s[theme]}</small>
+                </span>
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="menu-lang">
+      <h3 id="menu-lang" class="menu-h">{s.language}</h3>
+      <ul>
+        {
+          LOCALES.map((l) => (
+            <li>
+              <a
+                class="menu-item"
+                data-menu-item
+                href={alternates[l]}
+                hreflang={l}
+                lang={l}
+                aria-current={l === locale ? "true" : undefined}
+              >
+                <span class="menu-mark" aria-hidden="true" />
+                <span class="menu-label">
+                  <span>{LANG[l].name}</span>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section aria-labelledby="menu-contact">
+      <h3 id="menu-contact" class="menu-h">{s.contact}</h3>
+      <ul>
+        <li>
+          <a class="menu-item" data-menu-item href={mailto}>
+            <span class="menu-mark menu-mark-go" aria-hidden="true"></span>
+            <span class="menu-label">
+              <span>{s.write}</span>
+              <small>{CONTACT_EMAIL}</small>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</dialog>
+
+<script>
+  import { THEME_META, type Theme } from "../lib/site";
+
+  const root = document.documentElement;
+  const dialog = document.querySelector<HTMLDialogElement>("dialog#menu");
+  const opener = document.querySelector<HTMLButtonElement>("[data-menu-open]");
+
+  if (dialog && opener) {
+    const items = () => [...dialog.querySelectorAll<HTMLElement>("[data-menu-item]")];
+    const themeButtons = [...dialog.querySelectorAll<HTMLButtonElement>("[data-set-theme]")];
+
+    const sync = () => {
+      for (const b of themeButtons) {
+        b.setAttribute("aria-pressed", String(b.dataset.setTheme === root.dataset.theme));
+      }
+      const theme = THEME_META[root.dataset.theme as Theme];
+      if (!theme) return;
+      const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+      if (meta) meta.content = theme.color;
+      const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+      if (icon) icon.href = theme.icon;
+      const touch = document.querySelector<HTMLLinkElement>('link[rel="apple-touch-icon"]');
+      if (touch) touch.href = theme.touchIcon;
+    };
+
+    const setTheme = (theme: string) => {
+      if (theme === root.dataset.theme) return;
+      try {
+        localStorage.setItem("theme", theme);
+      } catch {}
+      const apply = () => {
+        root.dataset.theme = theme;
+        sync();
+        document.dispatchEvent(new CustomEvent("themechange", { detail: theme }));
+      };
+      const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (document.startViewTransition && !calm) {
+        // a navigation can abort the transition; the theme is applied either way
+        document.startViewTransition(apply).ready.catch(() => {});
+      } else apply();
+    };
+
+    const open = () => {
+      if (dialog.open) return;
+      sync();
+      dialog.showModal();
+      // start on the active style
+      themeButtons.find((b) => b.getAttribute("aria-pressed") === "true")?.focus();
+    };
+
+    sync();
+    opener.addEventListener("click", open);
+    dialog.querySelector("[data-menu-close]")?.addEventListener("click", () => dialog.close());
+    // a click outside the panel lands on the dialog itself: the backdrop
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    for (const b of themeButtons) b.addEventListener("click", () => setTheme(b.dataset.setTheme ?? ""));
+
+    addEventListener("keydown", (event) => {
+      const mod = event.metaKey || event.ctrlKey;
+      if (mod && !event.altKey && !event.shiftKey && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        if (dialog.open) dialog.close();
+        else open();
+      }
+    });
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+      event.preventDefault();
+      const list = items();
+      const i = list.indexOf(document.activeElement as HTMLElement);
+      const step = event.key === "ArrowDown" ? 1 : -1;
+      list[(i + step + list.length) % list.length]?.focus();
+    });
+
+    // show the shortcut of this platform
+    const platform =
+      (navigator as Navigator & { userAgentData?: { platform: string } }).userAgentData?.platform ??
+      navigator.platform;
+    if (!/mac|iphone|ipad/i.test(platform)) {
+      for (const k of document.querySelectorAll("[data-shortcut]")) k.textContent = "Ctrl K";
+    }
+  }
+</script>

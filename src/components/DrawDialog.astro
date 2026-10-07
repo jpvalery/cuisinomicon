@@ -1,0 +1,100 @@
+---
+import { type Locale, t } from "../i18n/ui";
+import type { Recipe } from "../lib/recipes";
+import TarotCard from "./TarotCard.astro";
+
+interface Props {
+  locale: Locale;
+  recipes: Recipe[];
+  /** Key of the current recipe, never drawn. */
+  current?: string;
+}
+
+const { locale, recipes, current } = Astro.props;
+const s = t(locale).arcanes;
+---
+
+<dialog
+  id="draw"
+  aria-label={s.drawn}
+  data-current={current}
+  data-label={s.drawn}
+  data-sep={locale === "fr" ? " : " : ": "}
+  class="arcanes-only m-auto w-[min(560px,100vw)] max-h-dvh bg-transparent px-4 py-8 text-center text-card backdrop:bg-[rgb(14_20_46/0.86)]"
+>
+  <div class="mx-auto w-[min(280px,70vw)] perspective-[1400px]" data-flip>
+    <div class="flip-inner relative">
+      <div>
+        {
+          recipes.map((r) => (
+            <div data-card={r.key} data-url={r.url} data-title={r.data.title} hidden>
+              <TarotCard recipe={r} decorative lazy />
+            </div>
+          ))
+        }
+      </div>
+      <div class="tarot absolute inset-0 rotate-y-180">
+        <div class="tarot-back"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-7 flex flex-wrap justify-center gap-3">
+    <a
+      data-go
+      href={recipes[0]?.url}
+      class="rounded-full border-2 border-card bg-card px-[18px] py-3 text-[18px]/none font-medium text-line no-underline"
+      >{s.read}</a
+    >
+    <button
+      type="button"
+      data-draw
+      class="cursor-pointer rounded-full border-2 border-card px-[18px] py-3 text-[18px]/none font-medium"
+    >
+      {s.drawAgain}
+    </button>
+    <button
+      type="button"
+      data-close
+      class="cursor-pointer rounded-full border-2 border-card px-[18px] py-3 text-[18px]/none font-medium"
+    >
+      {s.close}
+    </button>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("dialog#draw");
+  if (dialog) {
+    const flip = dialog.querySelector<HTMLElement>("[data-flip]");
+    const go = dialog.querySelector<HTMLAnchorElement>("[data-go]");
+    const cards = [...dialog.querySelectorAll<HTMLElement>("[data-card]")];
+    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let last = "";
+
+    const draw = () => {
+      const pool = cards.filter(
+        (c) => c.dataset.card !== dialog.dataset.current && c.dataset.card !== last,
+      );
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      last = pick.dataset.card ?? "";
+      for (const c of cards) c.hidden = c !== pick;
+      if (go && pick.dataset.url) go.href = pick.dataset.url;
+      dialog.setAttribute(
+        "aria-label",
+        `${dialog.dataset.label}${dialog.dataset.sep}${pick.dataset.title}`,
+      );
+      flip?.removeAttribute("data-shown");
+      if (!dialog.open) dialog.showModal();
+      setTimeout(() => flip?.setAttribute("data-shown", ""), calm ? 0 : 250);
+    };
+
+    document.addEventListener("click", (event) => {
+      if ((event.target as Element).closest("[data-draw]")) draw();
+      else if ((event.target as Element).closest("[data-close]")) dialog.close();
+    });
+    // a click outside the card and buttons closes the dialog
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+  }
+</script>

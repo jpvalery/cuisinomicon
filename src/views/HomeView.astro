@@ -1,0 +1,144 @@
+---
+import DrawDialog from "../components/DrawDialog.astro";
+import TarotCard from "../components/TarotCard.astro";
+import TicketStub from "../components/TicketStub.astro";
+import { homePath, LOCALES, type Locale, t } from "../i18n/ui";
+import Base from "../layouts/Base.astro";
+import { roman } from "../lib/format";
+import { getRecipes } from "../lib/recipes";
+import { homeGraph } from "../lib/schema";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const s = t(locale);
+const recipes = await getRecipes(locale);
+const tagline = s.ticket.tagline(recipes.length);
+const tilts = [-3, 2, -1.5, 3.5, -2.5, 1, 2.5];
+const alternates = Object.fromEntries(LOCALES.map((l) => [l, homePath(l)]));
+---
+
+<Base
+  locale={locale}
+  title={s.homeTitle}
+  description={s.description}
+  alternates={alternates}
+  graph={homeGraph(recipes, locale)}
+>
+  <main id="main">
+    <header
+      class="mx-auto max-w-[1280px] px-4 ticket:pt-[clamp(20px,5vw,56px)] arcanes:pt-[clamp(28px,6vw,64px)] arcanes:text-center"
+    >
+      <h1
+        class="m-0 ticket:font-pixel ticket:text-[clamp(48px,calc(18vw-8px),220px)]/[0.8] ticket:uppercase arcanes:font-display arcanes:text-[clamp(48px,10vw,112px)]/[0.95] arcanes:font-bold"
+      >
+        Cuisinomicon<span
+          aria-hidden="true"
+          class="ml-[0.08em] align-[0.5em] font-[system-ui] text-[0.5em] font-normal arcanes:text-gold"
+          >𖤐</span
+        >
+      </h1>
+      <p
+        class="mt-4 ticket:max-w-[38ch] ticket:text-ink-2 arcanes:mx-auto arcanes:max-w-[30ch] arcanes:text-[21px] arcanes:text-mist"
+      >
+        <span class="ticket-only"
+          >{tagline.before} <strong class="font-bold text-ink">{tagline.count}</strong>
+          {tagline.after}</span
+        >
+        <span class="arcanes-only">{s.arcanes.tagline(recipes.length)}</span>
+      </p>
+      <button
+        type="button"
+        data-draw
+        class="arcanes-only mt-6 cursor-pointer rounded-full border-2 border-line bg-gold px-7 pt-3.5 pb-3 font-caps text-[22px]/none tracking-[0.04em] text-line shadow-[0_0_0_3px_var(--color-gold),0_6px_0_3px_#8a6612] hover:bg-[#f6ca55] active:translate-y-[3px] active:shadow-[0_0_0_3px_var(--color-gold),0_3px_0_3px_#8a6612]"
+      >
+        {s.arcanes.draw}
+      </button>
+    </header>
+
+    <!-- Ticket: order tickets hanging on the pass rail -->
+    <ol
+      class="ticket-only rail mx-auto mt-[clamp(32px,6vw,64px)] grid max-w-[1280px] grid-cols-[repeat(auto-fill,minmax(min(100%,248px),1fr))] gap-x-7 gap-y-16 overflow-x-clip px-4 pb-20"
+    >
+      {
+        recipes.map((r, i) => (
+          <li>
+            <TicketStub recipe={r} lazy={i > 3} />
+          </li>
+        ))
+      }
+    </ol>
+
+    <!-- Arcanes: a spread of cards on the cloth -->
+    <ol
+      class="arcanes-only mx-auto mt-[clamp(40px,7vw,72px)] flex max-w-[1120px] flex-wrap justify-center gap-[clamp(18px,3vw,40px)] px-4 pb-24"
+      data-spread
+    >
+      {
+        recipes.map((r, i) => (
+          <li class="w-[calc(50%-10px)] min-[521px]:w-[clamp(140px,21vw,230px)]">
+            <a
+              href={r.url}
+              class="spread-card block"
+              style={`--tilt:${tilts[i % tilts.length]}deg`}
+              aria-label={`${roman(r.n)}, ${r.data.title}`}
+            >
+              <TarotCard recipe={r} lazy={i > 3} decorative />
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+
+    <DrawDialog locale={locale} recipes={recipes} />
+  </main>
+</Base>
+
+<script>
+  // One orchestrated moment, once per visit: the cards are dealt from the deck under the button.
+  const deal = () => {
+    if (document.documentElement.dataset.theme !== "arcanes") return false;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
+    const from = document.querySelector("header [data-draw]")?.getBoundingClientRect();
+    if (!from) return true;
+    const cards = [...document.querySelectorAll<HTMLElement>("[data-spread] .spread-card")];
+    cards.forEach((card, i) => {
+      const r = card.getBoundingClientRect();
+      const dx = from.left + from.width / 2 - (r.left + r.width / 2);
+      const dy = from.top + from.height / 2 - (r.top + r.height / 2);
+      card.style.transition = "none";
+      card.style.transform = `translate(${dx}px, ${dy}px) rotate(${i * 4 - 12}deg) scale(0.4)`;
+      card.style.opacity = "0";
+    });
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        cards.forEach((card, i) => {
+          card.style.transition = `transform 0.7s cubic-bezier(.2,.8,.2,1) ${i * 90}ms, opacity 0.2s linear ${i * 90}ms`;
+          card.style.transform = "";
+          card.style.opacity = "";
+          card.addEventListener("transitionend", () => card.style.removeProperty("transition"), {
+            once: true,
+          });
+        });
+      }),
+    );
+    return true;
+  };
+
+  let dealt = false;
+  try {
+    dealt = sessionStorage.getItem("dealt") === "1";
+  } catch {}
+  const run = () => {
+    if (!dealt && deal()) {
+      dealt = true;
+      try {
+        sessionStorage.setItem("dealt", "1");
+      } catch {}
+    }
+  };
+  run();
+  document.addEventListener("themechange", run);
+</script>

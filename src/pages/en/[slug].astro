@@ -1,0 +1,16 @@
+---
+import { getRecipes, type Recipe } from "../../lib/recipes";
+import RecipeView from "../../views/RecipeView.astro";
+
+export async function getStaticPaths() {
+  const recipes = await getRecipes("en");
+  return recipes.map((recipe) => ({ params: { slug: recipe.slug }, props: { recipe, recipes } }));
+}
+
+interface Props {
+  recipe: Recipe;
+  recipes: Recipe[];
+}
+---
+
+<RecipeView {...Astro.props} />

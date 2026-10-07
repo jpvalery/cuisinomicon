@@ -1,0 +1,299 @@
+---
+import { render } from "astro:content";
+import DrawDialog from "../components/DrawDialog.astro";
+import TarotCard from "../components/TarotCard.astro";
+import { homePath, t } from "../i18n/ui";
+import Base from "../layouts/Base.astro";
+import { duration, ingredientGroups, splitQuantity, stepHtml } from "../lib/format";
+import { coverImages, type Recipe, stepImages } from "../lib/recipes";
+import { recipeGraph } from "../lib/schema";
+import { OG, ogPath, SITE } from "../lib/site";
+
+interface Props {
+  recipe: Recipe;
+  recipes: Recipe[];
+}
+
+const { recipe, recipes } = Astro.props;
+const { data, locale } = recipe;
+const s = t(locale);
+const { Content } = await render(recipe.entry);
+const images = coverImages(recipe.key);
+const dur = (iso: string) => duration(iso, locale);
+
+const z = (n: number) => String(n).padStart(2, "0");
+const d = data.published;
+const printed = `${z(d.getUTCDate())}.${z(d.getUTCMonth() + 1)}.${d.getUTCFullYear()} ${z(d.getUTCHours())}:${z(d.getUTCMinutes())}`;
+const number = String(recipe.n).padStart(3, "0");
+
+// Meta description: the author's line, then times and yield when they fit in 160 characters.
+const summary = s.recipe.summary(dur(data.prepTime), dur(data.cookTime), data.yield);
+const metaDescription =
+  data.description.length + summary.length < 160
+    ? `${data.description} ${summary}`
+    : data.description;
+
+// a step name like "Cuire — Pas de four à convection!" is a warning
+const isWarning = (name: string) => /—.*!$/.test(name);
+
+// barcode for the foot of the receipt, derived from the slug
+const bits = [...recipe.slug].flatMap((c) =>
+  c.charCodeAt(0).toString(2).padStart(8, "0").split(""),
+);
+let x = 0;
+const bars: Array<{ x: number; w: number }> = [];
+bits.forEach((bit, i) => {
+  const w = bit === "1" ? 3 : 1 + Number(i % 3 === 0);
+  if (i % 2 === 0) bars.push({ x, w });
+  x += w + 1;
+});
+---
+
+<Base
+  locale={locale}
+  title={`${s.recipeTitle(data.title)} | ${SITE.name}`}
+  description={metaDescription}
+  alternates={recipe.alternates}
+  type="article"
+  image={{ src: ogPath(locale, recipe.slug), ...OG, alt: data.title }}
+  published={data.published}
+  modified={data.updated}
+  graph={recipeGraph(recipe)}
+>
+  <a
+    slot="bar"
+    href={homePath(locale)}
+    class="inline-block py-1.5 font-bold no-underline hover:underline underline-offset-4 arcanes:font-medium"
+  >
+    <span aria-hidden="true">← </span><span class="ticket-only">{s.back.ticket}</span><span
+      class="arcanes-only">{s.back.arcanes}</span
+    >
+  </a>
+
+  <main id="main" class="px-4 ticket:pt-9 ticket:pb-24 arcanes:pt-6 arcanes:pb-10">
+    <article class="recipe tear-top tear-bottom">
+      <div class="r-visual">
+        <img
+          class="ticket-only dither mx-auto -mt-1 mb-5 h-auto w-[240px] min-[520px]:w-[480px] max-w-full"
+          src={images.ticket.src}
+          width={images.ticket.width}
+          height={images.ticket.height}
+          alt=""
+          fetchpriority="high"
+        />
+        <div class="arcanes-only">
+          <TarotCard recipe={recipe} decorative />
+          <p class="mt-5 text-center text-[20px]/[1.45] italic text-mist max-[899px]:hidden">
+            {data.description}
+          </p>
+        </div>
+      </div>
+
+      <div class="ticket-only">
+        <div class="text-center">
+          <p class="font-pixel text-[42px]/none uppercase tracking-[0.04em]">Cuisinomicon 𖤐</p>
+          <p class="mt-1.5 text-[13px] text-ink-2">{s.ticket.house}<br />cuisinomicon.com</p>
+        </div>
+        <hr class="cut" />
+        <dl class="grid grid-cols-[auto_1fr] gap-x-4 [&_dd]:text-right [&_dt]:uppercase">
+          <dt>{s.ticket.number}</dt><dd>{number}</dd>
+          <dt>{s.ticket.date}</dt><dd><time datetime={d.toISOString()}>{printed}</time></dd>
+          <dt>{s.ticket.table.replace(/\s?:$/, "")}</dt><dd>{data.category}</dd>
+          <dt>{s.ticket.cuisine}</dt><dd>{data.cuisine}</dd>
+        </dl>
+        <hr class="cut" />
+      </div>
+
+      <header class="r-head">
+        <h1
+          class="ticket:mt-5 ticket:mb-3.5 ticket:font-pixel ticket:text-[clamp(56px,16vw,80px)]/[0.82] ticket:uppercase ticket:[overflow-wrap:anywhere] arcanes:font-display arcanes:text-[clamp(40px,6vw,64px)]/none arcanes:font-bold arcanes:text-balance"
+        >
+          {data.title}
+        </h1>
+        <p class="arcanes-only mt-2.5 text-umber">{s.arcanes.kind(data.category, data.cuisine)}</p>
+        <p class="ticket:mb-0 arcanes:mt-3 arcanes:italic min-[900px]:arcanes:hidden">
+          {data.description}
+        </p>
+        <hr class="cut ticket-only" />
+      </header>
+
+      <dl class="r-times">
+        <div><dt>{s.recipe.prep}</dt><dd>{dur(data.prepTime)}</dd></div>
+        <div><dt>{s.recipe.cook}</dt><dd>{dur(data.cookTime)}</dd></div>
+        <div><dt>{s.recipe.total}</dt><dd>{dur(data.totalTime)}</dd></div>
+        <div><dt>{s.recipe.yield}</dt><dd><span class="ticket-only">× </span>{data.yield}</dd></div>
+      </dl>
+
+      <section class="r-ingredients" aria-labelledby="ingredients">
+        <h2 id="ingredients" class="r-h2">{s.recipe.ingredients}</h2>
+        {
+          ingredientGroups(data.ingredients).map((g, gi) => (
+            <>
+              {g.group && (
+                <p class="mt-3.5 mb-1 ticket:font-extrabold ticket:before:content-['—_'] arcanes:mt-[18px] arcanes:mb-1.5 arcanes:font-caps arcanes:text-[21px]/[1.2] arcanes:text-vermilion">
+                  {g.group}
+                </p>
+              )}
+              <ul class="ingr arcanes:columns-[2_15em] arcanes:gap-x-8">
+                {g.items.map((item, ii) => {
+                  const q = splitQuantity(item);
+                  return (
+                    <li class="break-inside-avoid">
+                      <label>
+                        <input type="checkbox" name={`i-${gi}-${ii}`} />
+                        <span class="box" aria-hidden="true" />
+                        <span class="txt">
+                          {q ? (
+                            <>
+                              <span class="q">
+                                <span class="q-long">{q.amount}</span>
+                                <span class="q-short">{q.short}</span>
+                              </span>{" "}
+                              {/* no whitespace between joiner and name: "d'eau", not "d' eau" */}
+                              <span class="j">{q.joiner}</span><span class="n">{q.name}</span>
+                            </>
+                          ) : (
+                            <span class="n">{item}</span>
+                          )}
+                        </span>
+                        {q && <span class="lead" aria-hidden="true" />}
+                      </label>
+                    </li>
+                  );
+                })}
+              </ul>
+            </>
+          ))
+        }
+      </section>
+
+      <section class="r-steps" aria-labelledby="steps">
+        <h2 id="steps" class="r-h2">{s.recipe.steps}</h2>
+        <ol class="steps">
+          {
+            data.steps.map((step, i) => {
+              const photo = step.image ? stepImages(step.image) : null;
+              const alt = `${s.recipe.step} ${i + 1}${locale === "fr" ? " : " : ": "}${step.name}`;
+              return (
+                <li id={`${s.recipe.stepId}-${i + 1}`} class="scroll-mt-6">
+                  <span
+                    class:list={[
+                      "what font-extrabold arcanes:font-bold",
+                      { warn: isWarning(step.name) },
+                    ]}
+                  >
+                    {step.name}
+                  </span>
+                  {step.text && <p class="how mt-0.5" set:html={stepHtml(step.text)} />}
+                  {photo && (
+                    <>
+                      <img
+                        class="ticket-only dither mt-2.5 h-auto w-[240px] max-w-full"
+                        src={photo.ticket.src}
+                        width={photo.ticket.width}
+                        height={photo.ticket.height}
+                        alt={alt}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div class="arcanes-only duo mt-3.5 mb-1 max-w-[280px] overflow-hidden rounded-lg border-2 border-line">
+                        <img
+                          class="block h-auto w-full"
+                          src={photo.arcanes.src}
+                          width={photo.arcanes.width}
+                          height={photo.arcanes.height}
+                          alt={alt}
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                    </>
+                  )}
+                </li>
+              );
+            })
+          }
+        </ol>
+      </section>
+
+      <section class="r-notes" aria-labelledby="notes">
+        <h2 id="notes" class="r-h2">
+          <span class="ticket-only">{s.ticket.note}</span><span class="arcanes-only"
+            >{s.arcanes.notes}</span
+          >
+        </h2>
+        <div class="prose-notes ticket:italic arcanes:max-w-[62ch]">
+          <Content />
+        </div>
+      </section>
+
+      <footer class="ticket-only mt-7 text-center">
+        <hr class="cut" />
+        <p class="mt-7 font-pixel text-[34px]/none uppercase">*** Bon appétit ***</p>
+        <svg
+          class="mx-auto mt-[18px] mb-1.5 block h-14 w-[260px] max-w-full"
+          viewBox={`0 0 ${x} 56`}
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          fill="currentColor"
+        >
+          {bars.map((b) => <rect x={b.x} y="0" width={b.w} height="56" />)}
+        </svg>
+        <p class="text-[12px] text-ink-2">{recipe.slug.toUpperCase()}-{number}</p>
+        <p class="text-[12px] text-ink-2">{s.ticket.thanks}</p>
+        <button
+          type="button"
+          data-print
+          class="no-print mt-5 cursor-pointer border-2 border-ink px-3.5 py-2.5 text-[14px]/none font-bold hover:bg-ink hover:text-paper"
+        >
+          {s.ticket.print}
+        </button>
+      </footer>
+    </article>
+
+    <div class="arcanes-only no-print mt-10 text-center">
+      <button
+        type="button"
+        data-draw
+        class="cursor-pointer rounded-full border-2 border-line bg-gold px-7 pt-3.5 pb-3 font-caps text-[22px]/none tracking-[0.04em] text-line shadow-[0_0_0_3px_var(--color-gold),0_6px_0_3px_#8a6612] hover:bg-[#f6ca55] active:translate-y-[3px]"
+      >
+        {s.arcanes.drawAgain}
+      </button>
+    </div>
+
+    <DrawDialog locale={locale} recipes={recipes} current={recipe.key} />
+  </main>
+</Base>
+
+<script>
+  // Every print of a recipe is a receipt, whatever the theme on screen.
+  const root = document.documentElement;
+  let screenTheme: string | undefined;
+  let exactPage = false;
+  let pageStyle: HTMLStyleElement | undefined;
+
+  addEventListener("beforeprint", () => {
+    screenTheme = root.dataset.theme;
+    root.dataset.theme = "ticket";
+    root.classList.add("receipt-print");
+    if (exactPage) {
+      // one page as tall as the receipt: the printer feeds once and cuts once
+      const receipt = document.querySelector(".recipe");
+      const mm = Math.ceil(((receipt?.getBoundingClientRect().height ?? 0) * 25.4) / 96) + 4;
+      pageStyle = document.createElement("style");
+      pageStyle.textContent = `@page { size: 80mm ${mm}mm; margin: 0; }`;
+      document.head.append(pageStyle);
+    }
+  });
+  addEventListener("afterprint", () => {
+    if (screenTheme) root.dataset.theme = screenTheme;
+    root.classList.remove("receipt-print");
+    pageStyle?.remove();
+    exactPage = false;
+  });
+
+  document.querySelector("[data-print]")?.addEventListener("click", () => {
+    exactPage = true;
+    window.print();
+  });
+</script>

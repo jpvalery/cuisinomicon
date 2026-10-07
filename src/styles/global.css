@@ -1,0 +1,818 @@
+@import "tailwindcss";
+
+/* Two themes share one markup. <html data-theme="ticket|arcanes"> picks one. */
+@custom-variant ticket (&:where([data-theme="ticket"], [data-theme="ticket"] *));
+@custom-variant arcanes (&:where([data-theme="arcanes"], [data-theme="arcanes"] *));
+
+@theme {
+  --font-pixel: var(--font-vt323);
+  --font-mono: var(--font-chivo-mono);
+  --font-display: var(--font-almendra);
+  --font-caps: var(--font-almendra-sc);
+  --font-sans: var(--font-alegreya-sans);
+
+  /* Ticket: a kitchen order printer */
+  --color-counter: #d5d6d2;
+  --color-steel-hi: #f4f5f4;
+  --color-steel: #b9bcbc;
+  --color-steel-lo: #7d8183;
+  --color-paper: #fdfdfa;
+  --color-ink: #1c1b19;
+  --color-ink-2: #5d5b56;
+  --color-ribbon: #c0282a;
+
+  /* Arcanes: Tarot de Marseille */
+  --color-cloth: #1b2a5e;
+  --color-card: #f4ead5;
+  --color-line: #1d1a17;
+  --color-vermilion: #c8372d;
+  --color-gold: #f0b92d;
+  --color-flesh: #f3c29a;
+  --color-sky: #8fb8d8;
+  --color-azure: #3866ad;
+  --color-mist: #d9dcea;
+  --color-umber: #5a5148;
+}
+
+@layer base {
+  [data-theme="ticket"] {
+    color-scheme: light;
+  }
+  [data-theme="arcanes"] {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  [data-theme="arcanes"] body {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg fill='%23f0b92d' fill-opacity='.16'%3E%3Cpath d='M30 20l2 8 8 2-8 2-2 8-2-8-8-2 8-2z'/%3E%3Cpath d='M120 70l1.4 5.6 5.6 1.4-5.6 1.4-1.4 5.6-1.4-5.6-5.6-1.4 5.6-1.4z'/%3E%3Cpath d='M70 135l2.4 9.6 9.6 2.4-9.6 2.4-2.4 9.6-2.4-9.6-9.6-2.4 9.6-2.4z'/%3E%3Ccircle cx='160' cy='150' r='1.6'/%3E%3Ccircle cx='95' cy='25' r='1.2'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-ribbon);
+    outline-offset: 3px;
+  }
+  [data-theme="arcanes"] :focus-visible {
+    outline-color: var(--color-gold);
+    outline-offset: 4px;
+  }
+}
+
+/* Unlayered on purpose: it beats every layered utility (e.g. `flex`) without !important. */
+[data-theme="arcanes"] .ticket-only,
+[data-theme="ticket"] .arcanes-only {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
+@layer components {
+  /* ───────────── Ticket ───────────── */
+
+  .dither {
+    image-rendering: pixelated;
+  }
+
+  /* dashed cut line and double rule, as printed */
+  .cut {
+    border: 0;
+    height: 2px;
+    margin-block: 12px;
+    background: repeating-linear-gradient(90deg, var(--color-ink) 0 5px, transparent 5px 9px);
+  }
+
+  /* the steel rail: each cell carries a segment, neighbours join into one bar */
+  .rail > li {
+    position: relative;
+    padding-top: 6px;
+  }
+  .rail > li::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: -15px;
+    right: -15px;
+    height: 16px;
+    background: linear-gradient(
+      var(--color-steel-hi),
+      var(--color-steel) 45%,
+      var(--color-steel-lo)
+    );
+    box-shadow: 0 3px 4px rgb(0 0 0 / 0.18);
+  }
+  .stub {
+    transform-origin: 50% 0;
+    transform: rotate(var(--tilt, 0deg));
+    transition: transform 0.18s ease;
+  }
+  .stub:hover {
+    transform: rotate(0deg) translateY(4px);
+  }
+
+  /* torn paper edges */
+  [data-theme="ticket"] .tear-bottom::after,
+  [data-theme="ticket"] .tear-top::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 8px;
+    --tooth: 10px 8px repeat-x;
+  }
+  [data-theme="ticket"] .tear-bottom::after {
+    bottom: -8px;
+    background:
+      linear-gradient(135deg, var(--color-paper) 50%, transparent 50%) 0 0 / var(--tooth),
+      linear-gradient(225deg, var(--color-paper) 50%, transparent 50%) 0 0 / var(--tooth);
+  }
+  [data-theme="ticket"] .tear-top::before {
+    top: -8px;
+    background:
+      linear-gradient(45deg, var(--color-paper) 50%, transparent 50%) 0 0 / var(--tooth),
+      linear-gradient(-45deg, var(--color-paper) 50%, transparent 50%) 0 0 / var(--tooth);
+  }
+
+  /* ───────────── Arcanes ───────────── */
+
+  .tarot {
+    container-type: inline-size;
+    color: var(--color-line);
+  }
+  .tarot-face,
+  .tarot-back {
+    aspect-ratio: 6 / 11;
+    border: 2px solid var(--color-line);
+    border-radius: 3.5cqi;
+    box-shadow:
+      inset 0 0 0 3cqi var(--color-card),
+      inset 0 0 0 calc(3cqi + 2px) var(--color-line),
+      0 14px 26px -12px rgb(0 0 0 / 0.55);
+  }
+  .tarot-face {
+    background: var(--color-card);
+    padding: calc(3cqi + 2px);
+    display: grid;
+    grid-template-rows: 15cqi 1fr 19cqi;
+    overflow: hidden;
+  }
+  .tarot-num {
+    display: grid;
+    place-items: center;
+    font: 400 10cqi / 1 var(--font-caps);
+    border-bottom: 2px solid var(--color-line);
+  }
+  .tarot-art {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 4cqi 10cqi;
+    background: linear-gradient(
+      var(--color-sky) 0 50%,
+      var(--color-line) 50% calc(50% + 2px),
+      var(--color-card) calc(50% + 2px)
+    );
+  }
+  /* Le Soleil: a ray burst and a disc */
+  .tarot-art::before,
+  .tarot-art::after {
+    content: "";
+    position: absolute;
+    top: 5cqi;
+    left: 50%;
+    translate: -50% 0;
+    border-radius: 50%;
+  }
+  .tarot-art::before {
+    width: 72cqi;
+    aspect-ratio: 1;
+    background: repeating-conic-gradient(var(--color-gold) 0 7deg, transparent 7deg 18deg);
+    mask: radial-gradient(circle, #000 0 70%, transparent 71%);
+  }
+  .tarot-art::after {
+    margin-top: 23cqi;
+    width: 26cqi;
+    aspect-ratio: 1;
+    background: var(--color-gold);
+    border: 2px solid var(--color-line);
+    box-shadow:
+      inset 0 0 0 2.5cqi var(--color-gold),
+      inset 0 0 0 calc(2.5cqi + 1.5px) var(--color-vermilion);
+  }
+  .tarot-art img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+  }
+  .tarot-banner {
+    display: grid;
+    place-items: center;
+    text-align: center;
+    border-top: 2px solid var(--color-line);
+    font: 700 8.2cqi / 1 var(--font-display);
+    letter-spacing: 0.03em;
+    padding: 0 3cqi;
+    text-wrap: balance;
+  }
+  .tarot-banner[data-long] {
+    font-size: 6.8cqi;
+    line-height: 1.08;
+  }
+  .tarot-back {
+    background:
+      radial-gradient(
+        circle at 50% 50%,
+        var(--color-gold) 0 9cqi,
+        var(--color-line) 9cqi calc(9cqi + 2px),
+        transparent calc(9cqi + 2px)
+      ),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M12 0L24 12 12 24 0 12z' fill='none' stroke='%23f0b92d' stroke-width='1.4'/%3E%3Ccircle cx='12' cy='12' r='2' fill='%23c8372d'/%3E%3C/svg%3E")
+      center / 9cqi,
+      var(--color-azure);
+  }
+  .spread-card {
+    transform: rotate(var(--tilt, 0deg));
+    transition: transform 0.2s ease;
+  }
+  .spread-card:hover,
+  .spread-card:focus-visible {
+    transform: rotate(0deg) translateY(-10px);
+  }
+  .flip-inner {
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.3, 0.7, 0.2, 1);
+    transform: rotateY(180deg);
+  }
+  [data-shown] > .flip-inner {
+    transform: rotateY(0deg);
+  }
+  .flip-inner > * {
+    backface-visibility: hidden;
+  }
+
+  /* ───────────── Menu (Cmd+K), both themes ───────────── */
+
+  .menu-panel {
+    width: min(390px, calc(100vw - 32px));
+  }
+  .menu-item {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .menu-label {
+    display: flex;
+    flex-direction: column;
+  }
+  .menu-close {
+    cursor: pointer;
+  }
+
+  /* Ticket: a slip torn off the printer */
+  [data-theme="ticket"] .menu-panel {
+    position: relative;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font: 400 15px / 1.5 var(--font-mono);
+    font-variant-ligatures: none;
+    padding: 22px 22px 26px;
+  }
+  [data-theme="ticket"] .menu-title {
+    font: 400 46px / 0.85 var(--font-pixel);
+    text-transform: uppercase;
+  }
+  [data-theme="ticket"] .menu-close {
+    border: 2px solid var(--color-ink);
+    padding: 2px 8px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  [data-theme="ticket"] .menu-close:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  [data-theme="ticket"] .menu-h {
+    margin: 18px 0 6px;
+    padding: 2px 8px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  [data-theme="ticket"] .menu-item {
+    padding: 5px 6px;
+  }
+  [data-theme="ticket"] .menu-item:hover,
+  [data-theme="ticket"] .menu-item:focus-visible {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    outline: none;
+  }
+  [data-theme="ticket"] .menu-item small {
+    font-size: 13px;
+    opacity: 0.75;
+  }
+  [data-theme="ticket"] .menu-mark::before {
+    content: "[ ]";
+    white-space: pre;
+  }
+  [data-theme="ticket"] [aria-pressed="true"] > .menu-mark::before,
+  [data-theme="ticket"] [aria-current="true"] > .menu-mark::before {
+    content: "[x]";
+  }
+  [data-theme="ticket"] .menu-mark-go::before {
+    content: " > ";
+  }
+
+  /* Arcanes: an ivory card with a double frame */
+  [data-theme="arcanes"] .menu-panel {
+    background: var(--color-card);
+    color: var(--color-line);
+    font: 400 18px / 1.35 var(--font-sans);
+    border: 2px solid var(--color-line);
+    border-radius: 14px;
+    box-shadow:
+      inset 0 0 0 8px var(--color-card),
+      inset 0 0 0 10px var(--color-line),
+      0 30px 60px -20px rgb(0 0 0 / 0.6);
+    padding: 28px 30px 30px;
+  }
+  [data-theme="arcanes"] .menu-title {
+    font: 700 40px / 1 var(--font-display);
+  }
+  [data-theme="arcanes"] .menu-close {
+    border: 2px solid var(--color-line);
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  [data-theme="arcanes"] .menu-close:hover {
+    background: var(--color-line);
+    color: var(--color-card);
+  }
+  [data-theme="arcanes"] .menu-h {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0 4px;
+    font: 400 21px / 1.1 var(--font-caps);
+    color: var(--color-vermilion);
+  }
+  [data-theme="arcanes"] .menu-h::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: var(--color-line);
+  }
+  [data-theme="arcanes"] .menu-item {
+    gap: 14px;
+    padding: 6px 10px;
+    border-radius: 10px;
+  }
+  [data-theme="arcanes"] .menu-item:hover,
+  [data-theme="arcanes"] .menu-item:focus-visible {
+    background: #fff8ea;
+    outline: 2px solid var(--color-line);
+    outline-offset: 0;
+  }
+  [data-theme="arcanes"] .menu-item small {
+    font-size: 15px;
+    color: var(--color-umber);
+  }
+  [data-theme="arcanes"] .menu-mark {
+    flex: none;
+    width: 13px;
+    height: 13px;
+    border: 2px solid var(--color-line);
+    transform: rotate(45deg) translateY(-1px);
+    background: var(--color-card);
+  }
+  [data-theme="arcanes"] [aria-pressed="true"] > .menu-mark,
+  [data-theme="arcanes"] [aria-current="true"] > .menu-mark {
+    background: var(--color-vermilion);
+  }
+  [data-theme="arcanes"] .menu-mark-go {
+    background: var(--color-gold);
+  }
+
+  /* ───────────── Recipe page, both themes ───────────── */
+
+  /* Ticket: the receipt is one flowing column */
+  [data-theme="ticket"] .recipe {
+    position: relative;
+    max-width: 480px;
+    margin-inline: auto;
+    background: var(--color-paper);
+    padding: 28px 24px 32px;
+    box-shadow: 0 18px 30px -22px rgb(0 0 0 / 0.5);
+  }
+  @media (max-width: 519px) {
+    [data-theme="ticket"] .recipe {
+      padding-inline: 16px;
+    }
+  }
+
+  /* Arcanes: the card on the left, a framed sheet on the right. The sheet frame is
+     the grid container's ::before, placed over the rows of the sheet. */
+  [data-theme="arcanes"] .recipe {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: repeat(6, auto);
+    max-width: 1180px;
+    margin-inline: auto;
+    column-gap: 56px;
+    --sheet-pad: clamp(24px, 5vw, 56px);
+  }
+  [data-theme="arcanes"] .recipe::before {
+    content: "";
+    grid-column: 1;
+    grid-row: 2 / 7;
+    background: var(--color-card);
+    border: 2px solid var(--color-line);
+    border-radius: 14px;
+    box-shadow:
+      inset 0 0 0 8px var(--color-card),
+      inset 0 0 0 10px var(--color-line),
+      0 20px 40px -24px rgb(0 0 0 / 0.6);
+  }
+  [data-theme="arcanes"] .recipe > :not(.r-visual) {
+    grid-column: 1;
+    padding-inline: var(--sheet-pad);
+    color: var(--color-line);
+  }
+  [data-theme="arcanes"] .r-visual {
+    grid-row: 1;
+    width: min(100%, 240px);
+    margin: 0 auto 36px;
+  }
+  [data-theme="arcanes"] .r-head {
+    grid-row: 2;
+    padding-top: var(--sheet-pad);
+  }
+  [data-theme="arcanes"] .r-times {
+    grid-row: 3;
+  }
+  [data-theme="arcanes"] .r-ingredients {
+    grid-row: 4;
+  }
+  [data-theme="arcanes"] .r-steps {
+    grid-row: 5;
+  }
+  [data-theme="arcanes"] .r-notes {
+    grid-row: 6;
+    padding-bottom: var(--sheet-pad);
+  }
+  @media (min-width: 900px) {
+    [data-theme="arcanes"] .recipe {
+      grid-template-columns: 340px minmax(0, 1fr);
+      grid-template-rows: repeat(5, auto);
+    }
+    [data-theme="arcanes"] .recipe::before {
+      grid-column: 2;
+      grid-row: 1 / 6;
+    }
+    [data-theme="arcanes"] .recipe > :not(.r-visual) {
+      grid-column: 2;
+    }
+    [data-theme="arcanes"] .r-visual {
+      grid-column: 1;
+      grid-row: 1 / 6;
+      width: auto;
+      margin: 0;
+      position: sticky;
+      top: 24px;
+      align-self: start;
+    }
+    [data-theme="arcanes"] .r-head {
+      grid-row: 1;
+    }
+    [data-theme="arcanes"] .r-times {
+      grid-row: 2;
+    }
+    [data-theme="arcanes"] .r-ingredients {
+      grid-row: 3;
+    }
+    [data-theme="arcanes"] .r-steps {
+      grid-row: 4;
+    }
+    [data-theme="arcanes"] .r-notes {
+      grid-row: 5;
+    }
+  }
+
+  /* Times: printed totals (Ticket) or four colour-capped pips (Arcanes) */
+  [data-theme="ticket"] .r-times > div {
+    display: flex;
+    justify-content: space-between;
+  }
+  [data-theme="ticket"] .r-times > div:nth-child(3) {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 6px double var(--color-ink);
+    font: 400 40px / 1 var(--font-pixel);
+    text-transform: uppercase;
+  }
+  [data-theme="ticket"] .r-times > div:nth-child(4) {
+    padding-bottom: 8px;
+    border-bottom: 6px double var(--color-ink);
+  }
+  [data-theme="arcanes"] .r-times {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding-top: 28px;
+  }
+  @media (max-width: 560px) {
+    [data-theme="arcanes"] .r-times {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  [data-theme="arcanes"] .r-times > div {
+    border: 2px solid var(--color-line);
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    background: #fff8ea;
+  }
+  [data-theme="arcanes"] .r-times dt {
+    font: 500 14px / 1 var(--font-sans);
+    padding: 7px 4px 6px;
+    border-bottom: 2px solid var(--color-line);
+  }
+  [data-theme="arcanes"] .r-times dd {
+    padding: 10px 4px 8px;
+    font: 700 22px / 1.1 var(--font-display);
+  }
+  [data-theme="arcanes"] .r-times > div:nth-child(1) dt {
+    background: var(--color-gold);
+  }
+  [data-theme="arcanes"] .r-times > div:nth-child(2) dt {
+    background: var(--color-vermilion);
+    color: var(--color-card);
+  }
+  [data-theme="arcanes"] .r-times > div:nth-child(3) dt {
+    background: var(--color-sky);
+  }
+  [data-theme="arcanes"] .r-times > div:nth-child(4) dt {
+    background: var(--color-flesh);
+  }
+
+  /* Section headings: inverse print bar (Ticket), caps with a rule (Arcanes) */
+  [data-theme="ticket"] .r-h2 {
+    margin: 28px 0 12px;
+    padding: 3px 8px;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font: 800 15px / 1.5 var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  [data-theme="arcanes"] .r-h2 {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 44px 0 14px;
+    font: 400 30px / 1.1 var(--font-caps);
+  }
+  [data-theme="arcanes"] .r-h2::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: var(--color-line);
+  }
+
+  /* Steps: numbered by CSS counters */
+  .steps {
+    counter-reset: step;
+  }
+  .steps > li {
+    display: grid;
+    column-gap: 1ch;
+  }
+  .steps > li > * {
+    grid-column: 2;
+  }
+  .steps > li::before {
+    counter-increment: step;
+    grid-row: 1 / span 3;
+    grid-column: 1;
+  }
+  [data-theme="ticket"] .steps > li {
+    grid-template-columns: 3.2ch minmax(0, 1fr);
+    padding: 10px 0;
+    border-bottom: 1px dashed #b9b7b0;
+  }
+  [data-theme="ticket"] .steps > li:last-child {
+    border-bottom: 0;
+  }
+  [data-theme="ticket"] .steps > li::before {
+    content: counter(step, decimal-leading-zero);
+    font-weight: 800;
+  }
+  [data-theme="ticket"] .steps .warn {
+    color: var(--color-ribbon);
+  }
+  [data-theme="ticket"] .hl {
+    color: var(--color-ribbon);
+    font-weight: 700;
+  }
+  [data-theme="arcanes"] .steps > li {
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: 16px;
+    padding: 12px 0;
+  }
+  [data-theme="arcanes"] .steps > li::before {
+    content: counter(step);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--color-vermilion);
+    color: var(--color-card);
+    border: 2px solid var(--color-line);
+    font: 700 21px / 1 var(--font-display);
+  }
+  [data-theme="arcanes"] .steps .what {
+    padding-top: 6px;
+  }
+  [data-theme="arcanes"] .hl {
+    font-weight: 700;
+  }
+
+  /* Ingredients: same markup, two readings.
+     Ticket: [ ] name ........ qty      Arcanes: ◇ qty de name */
+  .ingr label {
+    cursor: pointer;
+  }
+  [data-theme="ticket"] .ingr label {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 3px 0;
+  }
+  [data-theme="ticket"] .ingr input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  [data-theme="ticket"] .ingr .box::before {
+    content: "[ ]";
+    white-space: pre;
+  }
+  [data-theme="ticket"] .ingr input:checked ~ .box::before {
+    content: "[x]";
+  }
+  [data-theme="ticket"] .ingr label:has(input:focus-visible) {
+    outline: 3px solid var(--color-ribbon);
+    outline-offset: 2px;
+  }
+  [data-theme="ticket"] .ingr .txt {
+    display: contents;
+  }
+  [data-theme="ticket"] .ingr .n {
+    order: 1;
+    min-width: 0;
+  }
+  [data-theme="ticket"] .ingr .lead {
+    order: 2;
+    flex: 1 1 24px;
+    border-bottom: 2px dotted var(--color-ink-2);
+    transform: translateY(-4px);
+  }
+  [data-theme="ticket"] .ingr .q {
+    order: 3;
+    font-weight: 700;
+    text-align: right;
+    white-space: nowrap;
+  }
+  [data-theme="ticket"] .ingr .q-long,
+  [data-theme="ticket"] .ingr .j,
+  [data-theme="arcanes"] .ingr .q-short,
+  [data-theme="arcanes"] .ingr .box,
+  [data-theme="arcanes"] .ingr .lead {
+    display: none;
+  }
+  [data-theme="ticket"] .ingr input:checked ~ .txt > *,
+  [data-theme="ticket"] .ingr input:checked ~ .lead {
+    text-decoration: line-through;
+    color: var(--color-ink-2);
+  }
+  [data-theme="arcanes"] .ingr label {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 4px 0;
+  }
+  [data-theme="arcanes"] .ingr input {
+    appearance: none;
+    margin: 0;
+    flex: 0 0 auto;
+    width: 15px;
+    height: 15px;
+    border: 2px solid var(--color-line);
+    transform: rotate(45deg) translateY(1px);
+    background: var(--color-card);
+    cursor: pointer;
+  }
+  [data-theme="arcanes"] .ingr input:checked {
+    background: var(--color-vermilion);
+  }
+  [data-theme="arcanes"] .ingr input:checked ~ .txt {
+    text-decoration: line-through 2px var(--color-vermilion);
+    color: #6d6359;
+  }
+
+  /* step photo in Arcanes: greyscale screened onto azure, a cyanotype */
+  .duo {
+    background: var(--color-azure);
+  }
+  .duo img {
+    filter: contrast(1.15) brightness(1.05);
+    mix-blend-mode: screen;
+  }
+
+  .prose-notes p + p {
+    margin-top: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stub,
+  .spread-card,
+  .flip-inner {
+    transition: none;
+  }
+}
+
+/* ───────── Printing: an 80 mm thermal receipt ─────────
+   A thermal head prints 72 mm of an 80 mm roll, 48 columns of its standard font.
+   The screen receipt is 48 columns too, so printing zooms it to exactly 72 mm.
+   src/pages/[slug].astro adds .receipt-print on beforeprint (in both themes) and,
+   for the "Imprimer le bon" button, an exact @page height: one ticket, one cut. */
+@page {
+  margin: 6mm 0;
+}
+@media print {
+  .no-print {
+    display: none;
+  }
+}
+html.receipt-print {
+  --color-ink: #000;
+  --color-ink-2: #000;
+  --color-ribbon: #000;
+  --color-paper: #fff;
+  /* print the dashed rules and the inverse heading bars */
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+html.receipt-print body {
+  background: #fff;
+  color: #000;
+}
+html.receipt-print main {
+  padding: 0;
+}
+html.receipt-print .recipe {
+  width: 440px;
+  max-width: none;
+  margin: 0 auto;
+  padding: 0 8px 4mm;
+  background: none;
+  box-shadow: none;
+  /* 72 mm = 272.13 px; 272.13 / 440 */
+  zoom: 0.6185;
+}
+html.receipt-print .tear-top::before,
+html.receipt-print .tear-bottom::after,
+html.receipt-print .steps img {
+  display: none;
+}
+/* 240 px dither at 2 dots per pixel on a 203 dpi head = 60 mm */
+html.receipt-print .r-visual img {
+  width: calc(60mm / 0.6185);
+}
+html.receipt-print .steps > li {
+  break-inside: avoid;
+  /* a thermal head has no grey */
+  border-color: #000;
+}
+/* the red ribbon is gone on paper: warnings get an underline */
+html.receipt-print .steps .warn {
+  text-decoration: underline;
+}

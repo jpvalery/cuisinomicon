@@ -1,0 +1,44 @@
+---
+import { homePath } from "../i18n/ui";
+import Base from "../layouts/Base.astro";
+import { SITE } from "../lib/site";
+
+// One 404 page serves every URL, so it speaks both languages.
+---
+
+<Base
+  locale="fr"
+  title={`Page introuvable · Page not found | ${SITE.name}`}
+  description="Cette page n'existe pas. This page does not exist."
+  alternates={{}}
+  noindex
+>
+  <main id="main" class="px-4 pt-10 pb-24">
+    <div
+      class="tear-top tear-bottom mx-auto text-center ticket:relative ticket:max-w-[480px] ticket:bg-paper ticket:px-6 ticket:py-8 arcanes:max-w-[420px]"
+    >
+      <div class="tarot arcanes-only mx-auto mb-8 w-[180px]" aria-hidden="true">
+        <div class="tarot-back"></div>
+      </div>
+      <p class="ticket-only font-pixel text-[40px]/none uppercase">Erreur 404</p>
+      <h1
+        class="mt-3 ticket:font-pixel ticket:text-[56px]/[0.85] ticket:uppercase arcanes:font-display arcanes:text-[44px]/none arcanes:font-bold"
+      >
+        Page introuvable
+      </h1>
+      <p class="mt-4">Cette page n'existe pas, ou elle a changé d'adresse.</p>
+      <p class="mt-6">
+        <a href={homePath("fr")} class="font-bold underline underline-offset-4"
+          >Voir toutes les recettes</a
+        >
+      </p>
+      <div lang="en" class="mt-8 border-t-2 border-dashed pt-6 ticket:border-ink arcanes:border-mist">
+        <p class="font-bold">Page not found</p>
+        <p class="mt-2">This page does not exist, or it has moved.</p>
+        <p class="mt-4">
+          <a href={homePath("en")} class="font-bold underline underline-offset-4">See all recipes</a>
+        </p>
+      </div>
+    </div>
+  </main>
+</Base>

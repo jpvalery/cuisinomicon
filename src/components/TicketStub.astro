@@ -1,0 +1,53 @@
+---
+import { t } from "../i18n/ui";
+import { duration } from "../lib/format";
+import type { Recipe } from "../lib/recipes";
+import { coverImages } from "../lib/recipes";
+
+interface Props {
+  recipe: Recipe;
+  lazy?: boolean;
+}
+
+const { recipe, lazy = false } = Astro.props;
+const { data, locale } = recipe;
+const s = t(locale);
+const img = coverImages(recipe.key).ticket;
+const tilt = [-1.4, 0.9, -0.5, 1.6, -1.1, 0.4, 1.2][(recipe.n - 1) % 7];
+const z = (n: number) => String(n).padStart(2, "0");
+const d = data.published;
+const day = `${z(d.getUTCDate())}.${z(d.getUTCMonth() + 1)}.${String(d.getUTCFullYear()).slice(2)}`;
+const time = `${z(d.getUTCHours())}:${z(d.getUTCMinutes())}`;
+---
+
+<a
+  href={recipe.url}
+  class="stub tear-bottom relative mx-auto block max-w-[272px] bg-paper px-4 pt-[26px] pb-[18px] text-ink no-underline shadow-[0_10px_18px_-12px_rgb(0_0_0/0.35)]"
+  style={`--tilt:${tilt}deg`}
+>
+  <div class="flex justify-between gap-2 text-[13px]">
+    <b class="font-extrabold uppercase">{s.ticket.number} {String(recipe.n).padStart(3, "0")}</b>
+    <time datetime={d.toISOString()}>{day}</time>
+  </div>
+  <div class="flex justify-between gap-2 text-[13px]">
+    <span>{s.ticket.table} {data.category}</span><span>{time}</span>
+  </div>
+  <img
+    class="dither mx-auto mt-3.5 mb-2.5 h-auto max-w-full"
+    src={img.src}
+    width={img.width}
+    height={img.height}
+    alt=""
+    loading={lazy ? "lazy" : undefined}
+    decoding="async"
+  />
+  <h2 class="mb-3 font-pixel text-[46px]/[0.85] uppercase [overflow-wrap:anywhere]">
+    {data.title}
+  </h2>
+  <hr class="cut" />
+  <dl class="grid grid-cols-[1fr_auto] text-[13px]">
+    <dt class="text-ink-2">{s.recipe.prep}</dt><dd class="text-right font-bold">{duration(data.prepTime, locale)}</dd>
+    <dt class="text-ink-2">{s.recipe.cook}</dt><dd class="text-right font-bold">{duration(data.cookTime, locale)}</dd>
+    <dt class="text-ink-2">{s.recipe.yield}</dt><dd class="text-right font-bold">× {data.yield}</dd>
+  </dl>
+</a>

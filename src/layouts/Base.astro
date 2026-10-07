@@ -1,0 +1,152 @@
+---
+import { Font } from "astro:assets";
+import Menu from "../components/Menu.astro";
+import { DEFAULT_LOCALE, homePath, LANG, LOCALES, type Locale, t } from "../i18n/ui";
+import { jsonLd } from "../lib/schema";
+import { OG, ogPath, SITE, THEME_META } from "../lib/site";
+import "../styles/global.css";
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  /** This page in each locale it exists in; the current locale's path is the canonical URL. */
+  alternates: Partial<Record<Locale, string>>;
+  image?: { src: string; width: number; height: number; alt: string };
+  type?: "website" | "article";
+  published?: Date;
+  modified?: Date;
+  graph?: object;
+  noindex?: boolean;
+}
+
+const {
+  locale,
+  title,
+  description,
+  alternates,
+  image = { src: ogPath(locale), ...OG, alt: t(locale).ogAlt },
+  type = "website",
+  published,
+  modified,
+  graph,
+  noindex = false,
+} = Astro.props;
+
+const abs = (path: string) => new URL(path, SITE.url).href;
+const canonical = abs(alternates[locale] ?? homePath(locale));
+const translations = LOCALES.filter((l) => alternates[l]);
+// the menu always offers every language: missing translations fall back to that language's home
+const menuLinks = Object.fromEntries(
+  LOCALES.map((l) => [l, alternates[l] ?? homePath(l)]),
+) as Record<Locale, string>;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang={LANG[locale].html} data-theme="ticket">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content={THEME_META.ticket.color} />
+    <link rel="icon" href={THEME_META.ticket.icon} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={THEME_META.ticket.touchIcon} />
+    <script is:inline define:vars={{ themes: THEME_META }}>
+      // Pick the theme before first paint: saved choice, else light → ticket, dark → arcanes.
+      // The browser colour, favicon and touch icon follow it.
+      (() => {
+        let theme = null;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch {}
+        if (!(theme in themes)) {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches ? "arcanes" : "ticket";
+        }
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content = themes[theme].color;
+        document.querySelector('link[rel="icon"]').href = themes[theme].icon;
+        document.querySelector('link[rel="apple-touch-icon"]').href = themes[theme].touchIcon;
+      })();
+    </script>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {!noindex && <link rel="canonical" href={canonical} />}
+    {
+      !noindex &&
+        translations.length > 1 &&
+        translations.map((l) => <link rel="alternate" hreflang={l} href={abs(alternates[l] ?? "/")} />)
+    }
+    {
+      !noindex && translations.length > 1 && alternates[DEFAULT_LOCALE] && (
+        <link rel="alternate" hreflang="x-default" href={abs(alternates[DEFAULT_LOCALE])} />
+      )
+    }
+    <meta
+      name="robots"
+      content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"}
+    />
+    <meta name="author" content={SITE.author.name} />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={LANG[locale].og} />
+    {
+      translations
+        .filter((l) => l !== locale)
+        .map((l) => <meta property="og:locale:alternate" content={LANG[l].og} />)
+    }
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {!noindex && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={abs(image.src)} />
+    <meta property="og:image:width" content={String(image.width)} />
+    <meta property="og:image:height" content={String(image.height)} />
+    <meta property="og:image:alt" content={image.alt} />
+    {published && <meta property="article:published_time" content={published.toISOString()} />}
+    {modified && <meta property="article:modified_time" content={modified.toISOString()} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={SITE.twitter} />
+    <meta name="twitter:creator" content={SITE.twitter} />
+
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <Font cssVariable="--font-vt323" />
+    <Font cssVariable="--font-chivo-mono" />
+    <Font cssVariable="--font-almendra" />
+    <Font cssVariable="--font-almendra-sc" />
+    <Font cssVariable="--font-alegreya-sans" />
+
+    {graph && <script is:inline type="application/ld+json" set:html={jsonLd(graph)} />}
+    <script is:inline defer src={SITE.analytics.src} data-website-id={SITE.analytics.websiteId}
+    ></script>
+  </head>
+  <body
+    class="min-h-dvh antialiased ticket:bg-counter ticket:font-mono ticket:text-[15px]/[1.55] ticket:text-ink ticket:[font-variant-ligatures:none] arcanes:bg-cloth arcanes:font-sans arcanes:text-[19px]/[1.5] arcanes:text-card"
+  >
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-4 focus:z-50 focus:px-3 focus:py-2 ticket:focus:bg-paper arcanes:focus:bg-card arcanes:focus:text-line"
+      >{t(locale).skip}</a
+    >
+    <header class="no-print mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 pt-5">
+      <div><slot name="bar" /></div>
+      <Menu locale={locale} alternates={menuLinks} />
+    </header>
+
+    <slot />
+
+    <footer
+      class="no-print px-4 pt-6 pb-12 text-center ticket:text-[13px] ticket:text-ink-2 arcanes:text-[16px] arcanes:text-mist"
+    >
+      <p>
+        © {SITE.since}–{year}
+        {SITE.name}
+        {t(locale).by} <a href={SITE.author.url} class="underline-offset-4 hover:underline"
+          >{SITE.author.name}</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>

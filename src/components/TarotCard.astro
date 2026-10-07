@@ -1,0 +1,36 @@
+---
+import { marseille, roman } from "../lib/format";
+import type { Recipe } from "../lib/recipes";
+import { coverImages } from "../lib/recipes";
+
+interface Props {
+  recipe: Recipe;
+  /** Hide from assistive tech when the page already names the recipe. */
+  decorative?: boolean;
+  lazy?: boolean;
+}
+
+const { recipe, decorative = false, lazy = false } = Astro.props;
+const img = coverImages(recipe.key).arcanes;
+const banner = marseille(recipe.data.title);
+---
+
+<div class="tarot" aria-hidden={decorative ? "true" : undefined}>
+  <div class="tarot-face">
+    <div class="tarot-num">{roman(recipe.n)}</div>
+    <div class="tarot-art">
+      <img
+        src={img.src}
+        width={img.width}
+        height={img.height}
+        alt=""
+        loading={lazy ? "lazy" : undefined}
+        decoding="async"
+      />
+    </div>
+    <div class="tarot-banner" data-long={banner.length > 15 ? "" : undefined} aria-hidden="true">
+      {banner}
+    </div>
+    {!decorative && <span class="sr-only">{recipe.data.title}</span>}
+  </div>
+</div>
